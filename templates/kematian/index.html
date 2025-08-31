@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% block title %}Data Kematian{% endblock %}
+{% block content %}
+
+<!-- Judul Halaman -->
+<div class="page-title">
+  <div class="title_left">
+    <h3><i class="fa fa-heartbeat"></i> Data Kematian</h3>
+  </div>
+</div>
+<div class="clearfix"></div>
+
+<!-- Panel Utama -->
+<div class="row">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+
+      <!-- Header Panel -->
+      <div class="x_title">
+        <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-6">
+            <h2><i class="fa fa-list"></i> Daftar Warga Meninggal</h2>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-6 text-right">
+            <a href="{{ url_for('kematian.tambah') }}" class="btn btn-primary btn-sm">
+              <i class="fa fa-plus"></i> Tambah Data Kematian
+            </a>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+
+      <div class="x_content">
+
+        <!-- Form Pencarian -->
+        <form method="GET" class="form-inline" style="margin-bottom: 20px;">
+          <div class="form-group">
+            <input type="text" name="q" class="form-control input-sm"
+                   placeholder="Cari Nama, NIK, Tanggal, dsb" style="min-width: 300px;"
+                   value="{{ keyword }}">
+          </div>
+          <button type="submit" class="btn btn-info btn-sm">
+            <i class="fa fa-search"></i> Cari
+          </button>
+        </form>
+
+        <!-- Tabel Data -->
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered table-hover datatable">
+            <thead style="background-color: #2A3F54; color: white;">
+              <tr class="text-center">
+                <th>No</th>
+                <th>No. Kematian</th>
+                <th>NIK</th>
+                <th>Nama</th>
+                <th>Tanggal Meninggal</th>
+                <th style="width: 120px;">Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in data %}
+              <tr>
+                <td class="text-center">{{ loop.index }}</td>
+                <td>{{ row.no_kematian }}</td>
+                <td>{{ row.nik }}</td>
+                <td>{{ row.nama }}</td>
+                <td>{{ row.tanggal_meninggal }}</td>
+                <td class="text-center">
+                  <a href="{{ url_for('kematian.detail', id=row.id) }}" class="btn btn-info btn-xs" title="Detail">
+                    <i class="fa fa-info-circle"></i>
+                  </a>
+                  <a href="{{ url_for('kematian.edit', id=row.id) }}" class="btn btn-warning btn-xs" title="Edit">
+                    <i class="fa fa-edit"></i>
+                  </a>
+                  <a href="{{ url_for('kematian.hapus', id=row.id) }}" class="btn btn-danger btn-xs" title="Hapus"
+                     onclick="return confirm('Yakin ingin menghapus?')">
+                    <i class="fa fa-trash"></i>
+                  </a>
+                </td>
+              </tr>
+              {% else %}
+              <tr>
+                <td colspan="6" class="text-center text-muted">Belum ada data kematian</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+  $(document).ready(function () {
+    if (!$.fn.DataTable.isDataTable('.datatable')) {
+      $('.datatable').DataTable({
+        dom: 'lrtip',
+        language: {
+          lengthMenu: "Tampilkan _MENU_ entri per halaman",
+          zeroRecords: "Tidak ada data ditemukan",
+          info: "Menampilkan halaman _PAGE_ dari _PAGES_",
+          infoEmpty: "Tidak ada data tersedia",
+          infoFiltered: "(difilter dari total _MAX_ entri)",
+          paginate: {
+            previous: "Sebelumnya",
+            next: "Berikutnya"
+          }
+        }
+      });
+    }
+    $('.dataTables_filter').remove();
+  });
+</script>
+{% endblock %}

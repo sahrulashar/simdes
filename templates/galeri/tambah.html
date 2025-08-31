@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% block title %}Tambah Galeri{% endblock %}
+{% block content %}
+
+<!-- Judul Halaman -->
+<div class="page-title">
+  <div class="title_left">
+    <h3><i class="fa fa-image"></i> Tambah Galeri</h3>
+  </div>
+</div>
+<div class="clearfix"></div>
+
+<!-- Panel Form -->
+<div class="row">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2><i class="fa fa-plus"></i> Form Tambah Galeri</h2>
+        <div class="clearfix"></div>
+      </div>
+
+      <div class="x_content">
+        <form action="{{ url_for('galeri.tambah') }}" method="POST" enctype="multipart/form-data" id="galeriForm">
+          <div class="form-group">
+            <label>Judul</label>
+            <input type="text" name="judul" class="form-control" required>
+          </div>
+
+          <div class="form-group">
+            <label>Deskripsi</label>
+            <textarea name="deskripsi" class="form-control" rows="3" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Upload Gambar</label>
+            <input type="file" name="gambar" id="gambar" class="form-control" accept="image/*" multiple required>
+            <small class="text-muted">Anda dapat memilih lebih dari satu gambar</small>
+          </div>
+
+          <div id="preview-container" class="row" style="margin-top: 15px;"></div>
+
+          <div class="form-group text-right">
+            <a href="{{ url_for('galeri.index') }}" class="btn btn-default">Kembali</a>
+            <button type="submit" class="btn btn-success">Simpan</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const gambarInput = document.getElementById('gambar');
+  const previewContainer = document.getElementById('preview-container');
+  let selectedFiles = [];
+
+  gambarInput.addEventListener('change', function (event) {
+    const newFiles = [...event.target.files];
+    selectedFiles = selectedFiles.concat(newFiles);
+
+    updatePreview();
+  });
+
+  function updatePreview() {
+    previewContainer.innerHTML = '';
+
+    selectedFiles.forEach((file, index) => {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const col = document.createElement('div');
+        col.className = 'col-md-3 col-sm-4 col-xs-6';
+        col.innerHTML = `
+          <div class="thumbnail" style="position:relative; margin-bottom:10px;">
+            <img src="${e.target.result}" class="img-responsive" style="border-radius: 4px;">
+            <button type="button" class="btn btn-danger btn-xs remove-btn"
+                    style="position:absolute; top:5px; right:5px;" data-index="${index}" title="Hapus">
+              <i class="fa fa-times"></i>
+            </button>
+          </div>
+        `;
+        col.querySelector('.remove-btn').addEventListener('click', function () {
+          selectedFiles.splice(index, 1);
+          updatePreview();
+        });
+        previewContainer.appendChild(col);
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Buat ulang input file yang akan dikirim
+    const dt = new DataTransfer();
+    selectedFiles.forEach(file => dt.items.add(file));
+    gambarInput.files = dt.files;
+  }
+</script>
+{% endblock %}

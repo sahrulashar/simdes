@@ -1,0 +1,98 @@
+{% extends "base_user.html" %}
+
+{% block content %}
+<section class="hero-potensi">
+  <div class="container text-center text-white py-5">
+    <h1 class="display-5 fw-bold">PERMOHONAN SURAT CERAI</h1>
+    <p class="lead">Ajukan Surat Keterangan Cerai secara mudah dan cepat</p>
+  </div>
+</section>
+
+<section class="section-form-cerai bg-light">
+  <div class="container">
+    <div class="form-sktm">
+      <h5 class="mb-4 text-danger fw-bold"><i class="fa fa-file-text"></i> Formulir Permohonan SK Cerai</h5>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      <form method="POST">
+        <!-- KK + NIK -->
+        <label>No KK</label>
+        <input type="text" name="no_kk" id="no_kk" class="form-control" required>
+
+        <label>NIK</label>
+        <input type="text" name="nik" id="nik" class="form-control" required>
+
+        <!-- Autofill -->
+        <label>Nama</label>
+        <input type="text" name="nama" id="nama" class="form-control" readonly required>
+
+        <label>Tempat Lahir</label>
+        <input type="text" name="tempat_lahir" id="tempat_lahir" class="form-control" readonly required>
+
+        <label>Tanggal Lahir</label>
+        <input type="date" name="tanggal_lahir" id="tanggal_lahir" class="form-control" readonly required>
+
+        <label>Jenis Kelamin</label>
+        <input type="text" name="jenis_kelamin" id="jenis_kelamin" class="form-control" readonly required>
+
+        <label>Pekerjaan</label>
+        <input type="text" name="pekerjaan" id="pekerjaan" class="form-control" readonly required>
+
+        <label>Agama</label>
+        <input type="text" name="agama" id="agama" class="form-control" readonly required>
+
+        <label>Alamat</label>
+        <textarea name="alamat" id="alamat" rows="3" class="form-control" readonly required></textarea>
+
+        <!-- Tambahan -->
+        <label>Nama Pasangan</label>
+        <input type="text" name="nama_pasangan" id="nama_pasangan" class="form-control" required>
+
+        <label>Tahun Cerai</label>
+        <input type="number" name="tahun_cerai" id="tahun_cerai" min="1900" max="2099" class="form-control" required>
+
+        <button type="submit" class="btn btn-danger mt-3"><i class="fa fa-paper-plane"></i> Kirim Permohonan</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const noKkInput = document.getElementById('no_kk');
+  const nikInput = document.getElementById('nik');
+
+  function fetchPenduduk() {
+    const no_kk = noKkInput.value.trim();
+    const nik = nikInput.value.trim();
+    if (no_kk && nik) {
+      fetch(`/cerai/ambil-data?no_kk=${encodeURIComponent(no_kk)}&nik=${encodeURIComponent(nik)}`)
+        .then(r => r.json())
+        .then(data => {
+          if (data.found) {
+            document.getElementById('nama').value = data.nama || '';
+            document.getElementById('tempat_lahir').value = data.tempat_lahir || '';
+            document.getElementById('tanggal_lahir').value = data.tanggal_lahir || '';
+            document.getElementById('jenis_kelamin').value = data.jenis_kelamin || '';
+            document.getElementById('pekerjaan').value = data.pekerjaan || '';
+            document.getElementById('agama').value = data.agama || '';
+            document.getElementById('alamat').value = data.alamat || '';
+          } else {
+            document.querySelectorAll('#nama,#tempat_lahir,#tanggal_lahir,#jenis_kelamin,#pekerjaan,#agama,#alamat').forEach(el => el.value = '');
+          }
+        });
+    }
+  }
+
+  noKkInput.addEventListener('change', fetchPenduduk);
+  nikInput.addEventListener('change', fetchPenduduk);
+});
+</script>
+{% endblock %}

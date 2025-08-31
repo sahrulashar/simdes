@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block title %}{{ 'Edit' if edit else 'Tambah' }} Penduduk{% endblock %}
+{% block content %}
+
+<div class="page-title">
+  <div class="title_left"><h3>{{ 'Edit' if edit else 'Tambah' }} Penduduk</h3></div>
+</div>
+<div class="clearfix"></div>
+
+<div class="row">
+  <div class="col-md-12 col-sm-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Form {{ 'Edit' if edit else 'Tambah' }}</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+
+        <form method="POST" action="{{ url_for('penduduk.edit', id=data.id) if edit else url_for('penduduk.tambah') }}" class="form-horizontal">
+
+          {% macro field(name, label, type='text', readonly=false) %}
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">{{ label }}</label>
+            <div class="col-sm-9">
+              <input type="{{ type }}" name="{{ name }}" id="{{ name }}" class="form-control"
+                     {% if readonly %}readonly{% endif %}
+                     value="{{ data[name] if data else '' }}">
+            </div>
+          </div>
+          {% endmacro %}
+
+          <!-- No KK - autocomplete -->
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">No KK</label>
+            <div class="col-sm-9">
+              <input type="text" name="no_kk" id="no_kk" class="form-control" required
+                     value="{{ data.no_kk if data else '' }}">
+            </div>
+          </div>
+
+          {{ field('nik', 'NIK') }}
+          {{ field('nama', 'Nama') }}
+
+          <!-- Jenis Kelamin -->
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label">Jenis Kelamin</label>
+            <div class="col-sm-9">
+              <select name="jenis_kelamin" class="form-control">
+                <option value="L" {% if data and data.jenis_kelamin == 'L' %}selected{% endif %}>Laki-laki</option>
+                <option value="P" {% if data and data.jenis_kelamin == 'P' %}selected{% endif %}>Perempuan</option>
+              </select>
+            </div>
+          </div>
+
+          {{ field('tempat_lahir', 'Tempat Lahir') }}
+          {{ field('tanggal_lahir', 'Tanggal Lahir', type='date') }}
+          {{ field('alamat', 'Alamat') }}
+          {{ field('agama', 'Agama') }}
+          {{ field('pendidikan', 'Pendidikan') }}
+          {{ field('pekerjaan', 'Pekerjaan') }}
+          {{ field('status_kawin', 'Status Kawin') }}
+          {{ field('kewarganegaraan', 'Kewarganegaraan') }}
+
+          <div class="ln_solid"></div>
+          <div class="form-group row">
+            <div class="col-sm-9 offset-sm-3">
+              <button type="submit" class="btn btn-success">
+                <i class="fa fa-save"></i> {{ 'Simpan Perubahan' if edit else 'Simpan' }}
+              </button>
+              <a href="{{ url_for('penduduk.index') }}" class="btn btn-secondary">
+                <i class="fa fa-arrow-left"></i> Kembali
+              </a>
+            </div>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<!-- jQuery UI untuk autocomplete -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+
+<script>
+  $(function () {
+    // Autocomplete untuk No. KK
+    $('#no_kk').autocomplete({
+      source: function (request, response) {
+        $.ajax({
+          url: "{{ url_for('penduduk.cari_kk') }}",
+          data: { term: request.term },
+          success: function (data) {
+            response(data);
+          }
+        });
+      },
+      minLength: 2,
+      select: function (event, ui) {
+        const selected = ui.item.value;
+        const kk = selected.split(' - ')[0];
+        $('#no_kk').val(kk);
+        return false;
+      }
+    });
+  });
+</script>
+{% endblock %}

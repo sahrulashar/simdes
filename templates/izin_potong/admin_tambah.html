@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% block title %}{{ 'Edit' if edit else 'Tambah' }} SK Izin Potong{% endblock %}
+{% block content %}
+
+<div class="page-title">
+  <div class="title_left"><h3><i class="fa fa-cutlery"></i> {{ 'Edit' if edit else 'Tambah' }} Surat Izin Potong</h3></div>
+</div>
+<div class="clearfix"></div>
+
+<div class="row">
+  <div class="col-md-8 col-sm-12 col-xs-12">
+    <div class="x_panel">
+      <div class="x_title"><h2><i class="fa fa-edit"></i> Form SK Izin Potong</h2><div class="clearfix"></div></div>
+
+      <div class="x_content">
+        <form method="POST" class="form-horizontal">
+
+          <!-- Autocomplete NIK -->
+          <div class="form-group">
+            <label class="control-label col-md-3">Cari NIK/Nama</label>
+            <div class="col-md-9">
+              <input type="text" id="cari_nik" class="form-control" placeholder="Ketik NIK atau Nama...">
+            </div>
+          </div>
+
+          <!-- Data penduduk -->
+          <div class="form-group"><label class="control-label col-md-3">NIK</label><div class="col-md-9"><input type="text" name="nik" id="nik" class="form-control" required value="{{ data.nik if data else '' }}"></div></div>
+          <div class="form-group"><label class="control-label col-md-3">Nama</label><div class="col-md-9"><input type="text" name="nama" id="nama" class="form-control" readonly required value="{{ data.nama if data else '' }}"></div></div>
+          <div class="form-group"><label class="control-label col-md-3">Tempat Lahir</label><div class="col-md-9"><input type="text" name="tempat_lahir" id="tempat_lahir" class="form-control" readonly value="{{ data.tempat_lahir if data else '' }}"></div></div>
+          <div class="form-group"><label class="control-label col-md-3">Tanggal Lahir</label><div class="col-md-9"><input type="date" name="tanggal_lahir" id="tanggal_lahir" class="form-control" readonly value="{{ data.tanggal_lahir if data else '' }}"></div></div>
+          <div class="form-group"><label class="control-label col-md-3">Jenis Kelamin</label><div class="col-md-9"><input type="text" name="jenis_kelamin" id="jenis_kelamin" class="form-control" readonly value="{{ data.jenis_kelamin if data else '' }}"></div></div>
+          <div class="form-group"><label class="control-label col-md-3">Pekerjaan</label><div class="col-md-9"><input type="text" name="pekerjaan" id="pekerjaan" class="form-control" readonly value="{{ data.pekerjaan if data else '' }}"></div></div>
+          <div class="form-group"><label class="control-label col-md-3">Alamat</label><div class="col-md-9"><textarea name="alamat" id="alamat" class="form-control" rows="2" readonly>{{ data.alamat if data else '' }}</textarea></div></div>
+
+          <!-- Data Hewan -->
+          <div class="form-group"><label class="control-label col-md-3">Jenis Hewan</label><div class="col-md-9"><input type="text" name="jenis_hewan" class="form-control" required value="{{ data.jenis_hewan if data else '' }}"></div></div>
+          <div class="form-group"><label class="control-label col-md-3">Jumlah Ekor</label><div class="col-md-9"><input type="number" name="jumlah_ekor" class="form-control" required value="{{ data.jumlah_ekor if data else '' }}"></div></div>
+          <div class="form-group"><label class="control-label col-md-3">Umur Hewan</label><div class="col-md-9"><input type="number" name="umur_hewan" class="form-control" value="{{ data.umur_hewan if data else '' }}"></div></div>
+          <div class="form-group"><label class="control-label col-md-3">Tanggal Potong</label><div class="col-md-9"><input type="date" name="tanggal_potong" class="form-control" required value="{{ data.tanggal_potong if data else '' }}"></div></div>
+
+          <!-- Data Acara -->
+          <div class="form-group"><label class="control-label col-md-3">Acara</label><div class="col-md-9"><input type="text" name="acara" class="form-control" required value="{{ data.acara if data else '' }}"></div></div>
+          <div class="form-group"><label class="control-label col-md-3">Nama Anak</label><div class="col-md-9"><input type="text" name="nama_anak" class="form-control" value="{{ data.nama_anak if data else '' }}"></div></div>
+          <div class="form-group"><label class="control-label col-md-3">Tempat Acara</label><div class="col-md-9"><input type="text" name="tempat_acara" class="form-control" value="{{ data.tempat_acara if data else '' }}"></div></div>
+
+          <!-- Tombol -->
+          <div class="ln_solid"></div>
+          <div class="form-group">
+            <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+              <a href="{{ url_for('izin_potong.admin_index') }}" class="btn btn-default">Kembali</a>
+              <button type="submit" class="btn btn-success">Simpan</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+  $(document).ready(function () {
+    $("#cari_nik").autocomplete({
+      source: "/izin-potong/cari-nik",
+      minLength: 2,
+      select: function (event, ui) {
+        const nik = ui.item.value.split(' - ')[0];
+        $("#nik").val(nik);
+        $.getJSON("/izin-potong/penduduk/" + nik, function (d) {
+          $("#nama").val(d.nama||"");
+          $("#tempat_lahir").val(d.tempat_lahir||"");
+          $("#tanggal_lahir").val(d.tanggal_lahir||"");
+          $("#jenis_kelamin").val(d.jenis_kelamin||"");
+          $("#pekerjaan").val(d.pekerjaan||"");
+          $("#alamat").val(d.alamat||"");
+        });
+      }
+    });
+  });
+</script>
+{% endblock %}

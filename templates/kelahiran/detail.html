@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Detail Data Kelahiran{% endblock %}
+
+{% block content %}
+<div class="page-title">
+  <div class="title_left">
+    <h3>Detail Data Kelahiran</h3>
+  </div>
+</div>
+<div class="clearfix"></div>
+
+<div class="row">
+  <div class="col-md-12 col-sm-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Informasi Lengkap</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <table class="table table-striped table-bordered">
+          <tbody>
+            <tr><th style="width: 25%">No. Kelahiran</th><td>{{ data.no_kelahiran }}</td></tr>
+            <tr><th>Nama</th><td>{{ data.nama }}</td></tr>
+            <tr><th>Tempat Lahir</th><td>{{ data.tempat_lahir }}</td></tr>
+            <tr><th>Tanggal Lahir</th><td>{{ data.tanggal_lahir }}</td></tr>
+            <tr><th>Berat</th><td>{{ data.berat }} gram</td></tr>
+            <tr><th>Jenis Kelamin</th><td>{{ 'Laki-laki' if data.jenis_kelamin == 'L' else 'Perempuan' }}</td></tr>
+            <tr><th>Nama Ayah</th><td>{{ data.nama_ayah }}</td></tr>
+            <tr><th>Nama Ibu</th><td>{{ data.nama_ibu }}</td></tr>
+            <tr><th>Alamat</th><td>{{ data.alamat }}</td></tr>
+            <tr><th>Pelapor</th><td>{{ data.pelapor }}</td></tr>
+          </tbody>
+        </table>
+
+        <div class="text-right mt-3">
+          <a href="{{ url_for('kelahiran.index') }}" class="btn btn-secondary">Kembali</a>
+          <a href="{{ url_for('kelahiran.edit', id=data.id) }}" class="btn btn-warning">Edit</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

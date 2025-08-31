@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Desa Gattareng Toa{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Font & Style -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+</head>
+<body>
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="topbar-container">
+      <div class="topbar-left" id="datetime">
+        <i class="fa-solid fa-clock"></i>
+      </div>
+      <div class="topbar-center">Website Resmi Desa Gattareng Toa</div>
+      <div class="topbar-right">
+        <a href="#">facebook</a> <span class="separator">X</span> <a href="#">instagram</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      
+      <!-- Logo dan Identitas -->
+      <div class="logo-wrap">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo">
+        <div class="desa-text">
+          <strong>
+            PEMERINTAH KABUPATEN SOPPENG<br>
+            KECAMATAN MARIORIWAWO<br>
+            DESA GATTARENG TOA
+          </strong>
+        </div>
+      </div>
+
+      <!-- Tombol Hamburger -->
+      <div class="hamburger" id="hamburger">
+        <i class="fa-solid fa-bars" id="hamburger-icon"></i>
+      </div>
+
+
+      <!-- Menu Navigasi -->
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="{{ url_for('landing.index') }}"><i class="fa-solid fa-house nav-icon"></i> Beranda</a></li>
+        <li><a href="{{ url_for('landing.profil_desa') }}"><i class="fa-solid fa-user nav-icon"></i> Profil Desa</a></li>
+        <li><a href="{{ url_for('landing.potensi_desa_user')}}"><i class="fa-solid fa-seedling nav-icon"></i> Potensi Desa</a></li>
+        <li><a href="{{ url_for('landing.user_berita_list') }}"><i class="fa-solid fa-newspaper nav-icon"></i> Berita</a></li>
+        <li><a href="{{ url_for('landing.galeri_user')}}"><i class="fa-solid fa-image nav-icon"></i> Galeri</a></li>
+          <li class="dropdown">
+          <a href="#"><i class="fa-solid fa-file-lines nav-icon"></i> Surat <i class="fa fa-caret-down"></i></a>
+          <ul class="dropdown-menu">
+            <li><a href="{{ url_for('user_skm.form_skm') }}"><i class="fa fa-file-text"></i> SK Kurang Mampu</a></li>
+            <li><a href="{{ url_for('user_sku.form_sku') }}"><i class="fa fa-briefcase"></i> SK Usaha</a></li>
+            <li><a href="{{ url_for('user_belum_nikah.form_belum_nikah') }}"><i class="fa-solid fa-heart"></i> SK Belum Menikah</a></li>
+            <li><a href="{{ url_for('user_hilang.form_hilang') }}"><i class="fa fa-file-text"></i> SK Kehilangan</a></li>
+            <li><a href="{{ url_for('user_keramaian.form_keramaian') }}"><i class="fa fa-music"></i> Surat Keramaian</a></li>
+            <li><a href="{{ url_for('user_merantau.form_merantau') }}"><i class="fa fa-plane"></i> SK Merantau</a></li>
+            <li><a href="{{ url_for('user_cerai.form_cerai') }}"><i class="fa fa-file-text"></i> SK Cerai</a></li>
+            <li><a href="{{ url_for('user_izin_potong.form_izin_potong') }}"><i class="fa fa-cutlery"></i> SK Izin Potong</a></li>
+            <li><a href="{{ url_for('user_s_kematian.form_s_kematian') }}"><i class="fa fa-file-text"></i> SK Kematian</a></li>
+            <li><a href="{{ url_for('user_s_penguburan.form_s_penguburan') }}"><i class="fa fa-file-text"></i> SK Penguburan</a></li>
+
+
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Halaman Konten -->
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  {% block footer %}
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-container">
+      
+      <!-- Logo & Deskripsi -->
+      <div class="footer-logo">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo Desa">
+        <p>
+          Website resmi Desa Gattareng Toa sebagai sarana informasi, layanan publik, dan pembangunan desa berbasis digital.
+        </p>
+      </div>
+
+      <!-- Navigasi -->
+      <div class="footer-links">
+        <h4><i class="fa-solid fa-compass footer-icon"></i> Navigasi</h4><br>
+        <ul>
+          <li><i class="fa-solid fa-house footer-icon"></i> <a href="{{ url_for('landing.index') }}">Beranda</a></li>
+          <li><i class="fa-solid fa-user footer-icon"></i> <a href="{{ url_for('landing.profil_desa')}}">Profil Desa</a></li>
+          <li><i class="fa-solid fa-seedling footer-icon"></i> <a href="{{ url_for('landing.potensi_desa_user')}}">Potensi</a></li>
+          <li><i class="fa-solid fa-chart-pie footer-icon"></i> <a href="{{url_for('landing.user_berita_list')}}">Berita</a></li>
+          <li><i class="fa-solid fa-image footer-icon"></i> <a href="{{ url_for('landing.galeri_user')}}">Galeri</a></li>
+          <li><i class="fa-solid fa-envelope footer-icon"></i> <a href="{{ url_for('user_sktm.form_sktm')}}">Pelayanan Surat Keterangan Tidak Mampu</a></li>
+          <li><i class="fa-solid fa-envelope footer-icon"></i> <a href="{{ url_for('user_sku.form_sku')}}">Pelayanan Surat Keterangan Usaha</a></li>
+        </ul>
+      </div>
+
+      <!-- Kontak & Sosial Media -->
+      <div class="footer-contact">
+        <h4><i class="fa-solid fa-phone footer-icon"></i> Kontak</h4>
+        <p><i class="fa-solid fa-location-dot footer-icon"></i> Gattareng Toa, Marioriwawo, Soppeng</p>
+        <p><i class="fa-solid fa-envelope footer-icon"></i> desa.gattarengtoa@soppengkab.go.id</p>
+        <p><i class="fa-solid fa-phone-volume footer-icon"></i> +62 813-0000-0000</p>
+        <div class="footer-social">
+          <a href="#"><i class="fab fa-facebook-f animated-icon"></i></a>
+          <a href="#"><i class="fab fa-instagram animated-icon"></i></a>
+          <a href="#"><i class="fab fa-youtube animated-icon"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer Bawah -->
+    <div class="footer-bottom">
+      &copy; {{ now().year }} Desa Gattareng Toa - All Rights Reserved.
+    </div>
+  </footer>
+  {% endblock %}
+
+  <!-- Visit Counter -->
+  <div id="visit-counter">
+    <i class="fa-solid fa-eye"></i> {{ jumlah_kunjungan }} Kunjungan Hari Ini
+  </div>
+
+  <!-- Swiper JS -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+  <!-- Tanggal & Jam -->
+  <script>
+    function updateDateTime() {
+      const now = new Date();
+      const options = {
+        weekday: 'long', year: 'numeric', month: 'long',
+        day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit'
+      };
+      const formatted = now.toLocaleDateString('id-ID', options);
+      document.getElementById('datetime').innerHTML = `<i class="fa-solid fa-clock"></i> ${formatted}`;
+    }
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
+  </script>
+
+  <!-- Swiper Init -->
+  <script>
+    const swiper = new Swiper(".sotk-swiper", {
+      autoplay: { delay: 3000, disableOnInteraction: false },
+      slidesPerView: 1,
+      spaceBetween: 20,
+      loop: true,
+      pagination: { el: ".swiper-pagination", clickable: true },
+      navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+      breakpoints: {
+        576: { slidesPerView: 2 },
+        768: { slidesPerView: 3 },
+        992: { slidesPerView: 4 },
+        1200: { slidesPerView: 5 }
+      }
+    });
+  </script>
+
+  <!-- Counter -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const counters = document.querySelectorAll(".admin-jumlah");
+      counters.forEach(counter => {
+        const target = +counter.getAttribute("data-target");
+        let count = 0;
+        const increment = Math.ceil(target / 60);
+        const update = () => {
+          if (count < target) {
+            count += increment;
+            counter.innerText = count > target ? target : count;
+            setTimeout(update, 20);
+          } else {
+            counter.innerText = target;
+          }
+        };
+        update();
+      });
+    });
+  </script>
+
+  <!-- Hamburger Toggle -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const hamburger = document.getElementById('hamburger');
+      const navMenu = document.getElementById('nav-menu');
+      const icon = document.getElementById('hamburger-icon');
+
+      if (hamburger && navMenu && icon) {
+        hamburger.addEventListener('click', () => {
+          navMenu.classList.toggle('active');
+          if (navMenu.classList.contains('active')) {
+            icon.classList.remove('fa-bars');
+            icon.classList.add('fa-xmark'); // ganti jadi "X"
+          } else {
+            icon.classList.remove('fa-xmark');
+            icon.classList.add('fa-bars'); // balik lagi ke hamburger
+          }
+        });
+      }
+    });
+  </script>
+  
+
+
+</body>
+</html>

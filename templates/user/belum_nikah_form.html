@@ -1,0 +1,96 @@
+{% extends "base_user.html" %}
+
+{% block content %}
+<!-- HERO SECTION -->
+<section class="hero-potensi">
+  <div class="container text-center text-white py-5">
+    <h1 class="display-5 fw-bold">PERMOHONAN SURAT BELUM MENIKAH</h1>
+    <p class="lead">Ajukan surat keterangan belum menikah secara mudah dan cepat</p>
+  </div>
+</section>
+
+<!-- FORMULIR BELUM MENIKAH -->
+<section class="section-form-bn bg-light">
+  <div class="container">
+    <div class="form-sktm"><!-- pakai class sama biar konsisten -->
+      <h5 class="mb-4 text-danger fw-bold">
+        <i class="fa-solid fa-file-signature me-2"></i>Formulir Permohonan Surat Belum Menikah
+      </h5>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      <form method="POST">
+        <label for="no_kk">Nomor KK</label>
+        <input type="text" name="no_kk" id="no_kk" class="form-control" required>
+
+        <label for="nik">NIK</label>
+        <input type="text" name="nik" id="nik" class="form-control" required>
+
+        <label for="nama">Nama</label>
+        <input type="text" name="nama" id="nama" class="form-control" readonly required>
+
+        <label for="jenis_kelamin">Jenis Kelamin</label>
+        <input type="text" name="jenis_kelamin" id="jenis_kelamin" class="form-control" readonly required>
+
+        <label for="tempat_lahir">Tempat Lahir</label>
+        <input type="text" name="tempat_lahir" id="tempat_lahir" class="form-control" readonly required>
+
+        <label for="tanggal_lahir">Tanggal Lahir</label>
+        <input type="date" name="tanggal_lahir" id="tanggal_lahir" class="form-control" readonly required>
+
+        <label for="pekerjaan">Pekerjaan</label>
+        <input type="text" name="pekerjaan" id="pekerjaan" class="form-control" readonly required>
+
+        <label for="alamat">Alamat</label>
+        <textarea name="alamat" id="alamat" rows="3" class="form-control" readonly required></textarea>
+
+        <button type="submit" class="btn btn-danger mt-3">
+          <i class="fa-solid fa-paper-plane me-1"></i> Kirim Permohonan
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const noKkInput = document.getElementById('no_kk');
+    const nikInput = document.getElementById('nik');
+
+    function fetchPenduduk() {
+      const no_kk = noKkInput.value;
+      const nik = nikInput.value;
+      if (no_kk && nik) {
+        fetch(`/belum-nikah/ambil-data?no_kk=${no_kk}&nik=${nik}`)
+          .then(response => response.json())
+          .then(data => {
+            if (data.found) {
+              document.getElementById('nama').value = data.nama;
+              document.getElementById('jenis_kelamin').value = data.jenis_kelamin;
+              document.getElementById('tempat_lahir').value = data.tempat_lahir;
+              document.getElementById('tanggal_lahir').value = data.tanggal_lahir;
+              document.getElementById('pekerjaan').value = data.pekerjaan;
+              document.getElementById('alamat').value = data.alamat;
+            } else {
+              document.getElementById('nama').value = '';
+              document.getElementById('jenis_kelamin').value = '';
+              document.getElementById('tempat_lahir').value = '';
+              document.getElementById('tanggal_lahir').value = '';
+              document.getElementById('pekerjaan').value = '';
+              document.getElementById('alamat').value = '';
+            }
+          });
+      }
+    }
+
+    noKkInput.addEventListener('change', fetchPenduduk);
+    nikInput.addEventListener('change', fetchPenduduk);
+  });
+</script>
+{% endblock %}

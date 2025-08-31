@@ -1,0 +1,101 @@
+{% extends "base_user.html" %}
+
+{% block content %}
+<!-- HERO SECTION -->
+<section class="hero-potensi">
+  <div class="container text-center text-white py-5">
+    <h1 class="display-5 fw-bold">PERMOHONAN SURAT KERAMAIAN</h1>
+    <p class="lead">Ajukan surat pengantar izin keramaian secara mudah dan cepat</p>
+  </div>
+</section>
+
+<!-- FORMULIR KERAMAIAN -->
+<section class="section-form-keramaian bg-light">
+  <div class="container">
+    <div class="form-sktm"><!-- reuse class biar konsisten -->
+      <h5 class="mb-4 text-danger fw-bold">
+        <i class="fa fa-music"></i> Formulir Permohonan Surat Keramaian
+      </h5>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      <form method="POST">
+        <!-- KK & NIK untuk autofill -->
+        <label for="no_kk">Nomor KK</label>
+        <input type="text" name="no_kk" id="no_kk" class="form-control" required>
+
+        <label for="nik">NIK</label>
+        <input type="text" name="nik" id="nik" class="form-control" required>
+
+        <!-- Data auto-isi -->
+        <label for="nama">Nama</label>
+        <input type="text" name="nama" id="nama" class="form-control" readonly required>
+
+        <label for="umur">Umur</label>
+        <input type="number" name="umur" id="umur" class="form-control" readonly required>
+
+        <label for="pekerjaan">Pekerjaan</label>
+        <input type="text" name="pekerjaan" id="pekerjaan" class="form-control" readonly required>
+
+        <label for="alamat">Alamat</label>
+        <textarea name="alamat" id="alamat" rows="3" class="form-control" readonly required></textarea>
+
+        <!-- Detail acara -->
+        <label for="kegiatan">Kegiatan</label>
+        <input type="text" name="kegiatan" id="kegiatan" class="form-control" placeholder="Misal: Resepsi Pernikahan" required>
+
+        <label for="tanggal_acara">Tanggal Acara</label>
+        <input type="date" name="tanggal_acara" id="tanggal_acara" class="form-control" required>
+
+        <label for="tempat">Tempat</label>
+        <input type="text" name="tempat" id="tempat" class="form-control" placeholder="Nama lokasi/acara" required>
+
+        <label for="dusun">Dusun</label>
+        <input type="text" name="dusun" id="dusun" class="form-control" placeholder="Dusun tempat acara" required>
+
+        <button type="submit" class="btn btn-danger mt-3">
+          <i class="fa fa-paper-plane"></i> Kirim Permohonan
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const noKkInput = document.getElementById('no_kk');
+    const nikInput = document.getElementById('nik');
+
+    function fetchPenduduk() {
+      const no_kk = noKkInput.value;
+      const nik = nikInput.value;
+      if (no_kk && nik) {
+        fetch(`/keramaian/ambil-data?no_kk=${encodeURIComponent(no_kk)}&nik=${encodeURIComponent(nik)}`)
+          .then(response => response.json())
+          .then(data => {
+            if (data.found) {
+              document.getElementById('nama').value = data.nama || '';
+              document.getElementById('umur').value = data.umur || '';
+              document.getElementById('pekerjaan').value = data.pekerjaan || '';
+              document.getElementById('alamat').value = data.alamat || '';
+            } else {
+              document.getElementById('nama').value = '';
+              document.getElementById('umur').value = '';
+              document.getElementById('pekerjaan').value = '';
+              document.getElementById('alamat').value = '';
+            }
+          });
+      }
+    }
+
+    noKkInput.addEventListener('change', fetchPenduduk);
+    nikInput.addEventListener('change', fetchPenduduk);
+  });
+</script>
+{% endblock %}

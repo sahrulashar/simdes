@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% block title %}{{ 'Edit' if edit else 'Tambah' }} Surat Keterangan Hilang{% endblock %}
+{% block content %}
+
+<div class="page-title">
+  <div class="title_left">
+    <h3><i class="fa fa-envelope-open-text"></i> {{ 'Edit' if edit else 'Tambah' }} Surat Keterangan Hilang</h3>
+  </div>
+</div>
+<div class="clearfix"></div>
+
+<div class="row">
+  <div class="col-md-8 col-sm-12 col-xs-12">
+    <div class="x_panel">
+
+      <div class="x_title">
+        <h2><i class="fa fa-edit"></i> Form Surat Hilang</h2>
+        <div class="clearfix"></div>
+      </div>
+
+      <div class="x_content">
+        <form method="POST" class="form-horizontal">
+
+          <!-- Autocomplete -->
+          <div class="form-group">
+            <label class="control-label col-md-3">Cari NIK/Nama</label>
+            <div class="col-md-9">
+              <input type="text" id="cari_nik" class="form-control" placeholder="Ketik NIK atau Nama...">
+            </div>
+          </div>
+
+          <!-- NIK -->
+          <div class="form-group">
+            <label class="control-label col-md-3">NIK</label>
+            <div class="col-md-9">
+              <input type="text" name="nik" id="nik" class="form-control" required
+                     value="{{ data.nik if data else '' }}">
+            </div>
+          </div>
+
+          <!-- Nama -->
+          <div class="form-group">
+            <label class="control-label col-md-3">Nama</label>
+            <div class="col-md-9">
+              <input type="text" name="nama" id="nama" class="form-control" required
+                     value="{{ data.nama if data else '' }}">
+            </div>
+          </div>
+
+          <!-- Jenis Kelamin -->
+          <div class="form-group">
+            <label class="control-label col-md-3">Jenis Kelamin</label>
+            <div class="col-md-9">
+              <input type="text" name="jenis_kelamin" id="jenis_kelamin" class="form-control" readonly
+                     value="{{ data.jenis_kelamin if data else '' }}">
+            </div>
+          </div>
+
+          <!-- Tempat Lahir -->
+          <div class="form-group">
+            <label class="control-label col-md-3">Tempat Lahir</label>
+            <div class="col-md-9">
+              <input type="text" name="tempat_lahir" id="tempat_lahir" class="form-control"
+                     value="{{ data.tempat_lahir if data else '' }}">
+            </div>
+          </div>
+
+          <!-- Tanggal Lahir -->
+          <div class="form-group">
+            <label class="control-label col-md-3">Tanggal Lahir</label>
+            <div class="col-md-9">
+              <input type="date" name="tanggal_lahir" id="tanggal_lahir" class="form-control"
+                     value="{{ data.tanggal_lahir if data else '' }}">
+            </div>
+          </div>
+
+          <!-- Alamat -->
+          <div class="form-group">
+            <label class="control-label col-md-3">Alamat</label>
+            <div class="col-md-9">
+              <textarea name="alamat" id="alamat" class="form-control" rows="2">{{ data.alamat if data else '' }}</textarea>
+            </div>
+          </div>
+
+          <!-- Keterangan Kehilangan -->
+          <div class="form-group">
+            <label class="control-label col-md-3">Keterangan Kehilangan</label>
+            <div class="col-md-9">
+              <input type="text" name="keterangan" id="keterangan" class="form-control" required
+                     value="{{ data.keterangan if data else '' }}">
+              <small class="text-muted">Contoh: KTP, SIM, Ijazah, atau barang lain yang hilang</small>
+            </div>
+          </div>
+
+          <!-- Tombol -->
+          <div class="ln_solid"></div>
+          <div class="form-group">
+            <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+              <a href="{{ url_for('hilang.admin_index') }}" class="btn btn-default">Kembali</a>
+              <button type="submit" class="btn btn-success">Simpan</button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+  $(document).ready(function () {
+    $("#cari_nik").autocomplete({
+      source: "/hilang/cari-nik",
+      minLength: 2,
+      select: function (event, ui) {
+        const selected = ui.item.value;
+        const nik = selected.split(' - ')[0];
+        $("#nik").val(nik);
+        getPenduduk(nik);
+      }
+    });
+
+    function getPenduduk(nik) {
+      $.getJSON("/hilang/penduduk/" + nik, function (data) {
+        $("#nama").val(data.nama);
+        $("#jenis_kelamin").val(data.jenis_kelamin);
+        $("#tempat_lahir").val(data.tempat_lahir);
+        $("#tanggal_lahir").val(data.tanggal_lahir);
+        $("#alamat").val(data.alamat);
+      });
+    }
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Detail Data Kematian{% endblock %}
+{% block content %}
+
+<div class="page-title">
+  <div class="title_left"><h3>Detail Data Kematian</h3></div>
+</div>
+<div class="clearfix"></div>
+
+<div class="row">
+  <div class="col-md-12 col-sm-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Informasi Lengkap</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <table class="table table-bordered">
+          <tr><th>No Kematian</th><td>{{ data.no_kematian }}</td></tr>
+          <tr><th>NIK</th><td>{{ data.nik }}</td></tr>
+          <tr><th>Nama</th><td>{{ data.nama }}</td></tr>
+          <tr><th>Tanggal Lahir</th><td>{{ data.tanggal_lahir }}</td></tr>
+          <tr><th>Tanggal Meninggal</th><td>{{ data.tanggal_meninggal }}</td></tr>
+          <tr><th>Tempat Meninggal</th><td>{{ data.tempat_meninggal }}</td></tr>
+          <tr><th>Umur</th><td>{{ data.umur_otomatis }} tahun</td></tr>
+          <tr><th>Sebab</th><td>{{ data.sebab }}</td></tr>
+          <tr><th>Tempat Makam</th><td>{{ data.tempat_makam }}</td></tr>
+          <tr><th>Pelapor</th><td>{{ data.pelapor }}</td></tr>
+          <tr><th>Hubungan Pelapor</th><td>{{ data.hubungan_pelapor }}</td></tr>
+        </table>
+        <div class="text-right mt-3">
+          <a href="{{ url_for('kematian.index') }}" class="btn btn-secondary">
+            <i class="fa fa-arrow-left"></i> Kembali
+          </a>
+          <a href="{{ url_for('kematian.edit', id=data.id) }}" class="btn btn-warning">
+            <i class="fa fa-edit"></i> Edit
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

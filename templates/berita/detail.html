@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Detail Berita{% endblock %}
+{% block content %}
+
+<div class="page-title">
+  <div class="title_left"><h3><i class="fa fa-file-text"></i> Detail Berita</h3></div>
+</div>
+<div class="clearfix"></div>
+
+<div class="row">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>{{ berita.judul }}</h2>
+        <div class="clearfix"></div>
+      </div>
+
+      <div class="x_content">
+        {% if berita.gambar %}
+          <p><img src="{{ url_for('static', filename='uploads/berita/' ~ berita.gambar) }}"
+                  class="img-responsive" style="max-width: 600px; margin-bottom: 20px;"></p>
+        {% endif %}
+
+        <div>
+          {{ berita.konten | safe }}
+        </div>
+
+        <hr>
+        <p><strong>Slug:</strong> {{ berita.slug }}</p>
+        <p><strong>Pembuat:</strong> {{ berita.pembuat }}</p>
+        <p><strong>Tanggal:</strong> {{ berita.created_at.strftime('%d %B %Y %H:%M') }}</p>
+
+        <a href="{{ url_for('berita.list_berita') }}" class="btn btn-default">
+          <i class="fa fa-arrow-left"></i> Kembali
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

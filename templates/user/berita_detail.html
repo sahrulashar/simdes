@@ -1,0 +1,41 @@
+{% extends 'base_user.html' %}
+
+{% block content %}
+<!-- HERO SECTION -->
+<section class="hero-potensi" style="background-image: url('{{ url_for('static', filename='images/wave-red.png') }}');">
+  <div class="container text-center text-white py-5">
+    <h1 class="display-5 fw-bold">DETAIL BERITA</h1>
+    <p class="lead">Baca informasi selengkapnya dari Desa Gattareng Toa</p>
+  </div>
+</section>
+
+<!-- DETAIL BERITA -->
+<section class="py-5 bg-white">
+  <div class="container">
+    <div class="berita-detail">
+
+      <!-- Judul Berita -->
+      <h2 class="fw-bold text-danger mb-3">{{ berita.judul }}</h2>
+
+      <!-- Tanggal dan Penulis -->
+      <p class="text-muted mb-4">
+        <strong>{{ berita.created_at.strftime('%d %B %Y') }}</strong> — 
+        <span class="text-success fw-semibold"><strong>{{ berita.pembuat }}</strong></span>
+      </p>
+
+      <!-- Gambar Utama -->
+      <div class="berita-detail-img mb-4">
+        <img src="{{ url_for('static', filename='uploads/berita/' ~ berita.gambar) }}"
+             alt="{{ berita.judul }}"
+             class="img-fluid w-100 rounded shadow">
+      </div>
+
+      <!-- Konten Berita -->
+      <div class="berita-konten text-dark fs-6" style="line-height: 1.8;">
+        {{ berita.konten | safe }}
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}

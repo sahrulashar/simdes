@@ -1,0 +1,136 @@
+{% extends "base_user.html" %}
+
+{% block content %}
+<!-- HERO SECTION -->
+<section class="hero-potensi">
+  <div class="container text-center text-white py-5">
+    <h1 class="display-5 fw-bold">PERMOHONAN SURAT IZIN POTONG</h1>
+    <p class="lead">Ajukan izin pemotongan hewan dengan mudah dan cepat</p>
+  </div>
+</section>
+
+<!-- FORMULIR IZIN POTONG -->
+<section class="section-form-izin-potong bg-light">
+  <div class="container">
+    <div class="form-izin-potong p-4 bg-white rounded shadow-sm">
+      <h5 class="mb-4 text-danger fw-bold">
+        <i class="fa fa-cutlery me-2"></i> Formulir Permohonan SK Izin Potong
+      </h5>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      <form method="POST">
+        <!-- NIK -->
+        <div class="mb-3">
+          <label for="nik" class="form-label">NIK</label>
+          <input type="text" name="nik" id="nik" class="form-control" required>
+        </div>
+
+        <!-- Autofill -->
+        <div class="mb-3">
+          <label class="form-label">Nama</label>
+          <input type="text" name="nama" id="nama" class="form-control" readonly required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Tempat Lahir</label>
+          <input type="text" name="tempat_lahir" id="tempat_lahir" class="form-control" readonly required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Tanggal Lahir</label>
+          <input type="date" name="tanggal_lahir" id="tanggal_lahir" class="form-control" readonly required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Jenis Kelamin</label>
+          <input type="text" name="jenis_kelamin" id="jenis_kelamin" class="form-control" readonly required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Pekerjaan</label>
+          <input type="text" name="pekerjaan" id="pekerjaan" class="form-control" readonly required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Alamat</label>
+          <textarea name="alamat" id="alamat" rows="3" class="form-control" readonly required></textarea>
+        </div>
+
+        <!-- Data Hewan -->
+        <div class="mb-3">
+          <label class="form-label">Jenis Hewan</label>
+          <input type="text" name="jenis_hewan" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Jumlah Ekor</label>
+          <input type="number" name="jumlah_ekor" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Umur Hewan (Tahun)</label>
+          <input type="number" name="umur_hewan" class="form-control">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Tanggal Potong</label>
+          <input type="date" name="tanggal_potong" class="form-control" required>
+        </div>
+
+        <!-- Data Acara -->
+        <div class="mb-3">
+          <label class="form-label">Acara</label>
+          <input type="text" name="acara" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Nama Anak</label>
+          <input type="text" name="nama_anak" class="form-control">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Tempat Acara</label>
+          <input type="text" name="tempat_acara" class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-danger mt-3">
+          <i class="fa fa-paper-plane me-1"></i> Kirim Permohonan
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const nikInput = document.getElementById('nik');
+  nikInput.addEventListener('change', function () {
+    const nik = nikInput.value.trim();
+    if (nik) {
+      fetch(`/izin-potong/ambil-data?nik=${encodeURIComponent(nik)}`)
+        .then(r => r.json())
+        .then(data => {
+          if (data.found) {
+            document.getElementById('nama').value = data.nama || '';
+            document.getElementById('tempat_lahir').value = data.tempat_lahir || '';
+            document.getElementById('tanggal_lahir').value = data.tanggal_lahir || '';
+            document.getElementById('jenis_kelamin').value = data.jenis_kelamin || '';
+            document.getElementById('pekerjaan').value = data.pekerjaan || '';
+            document.getElementById('alamat').value = data.alamat || '';
+          } else {
+            document.querySelectorAll('#nama,#tempat_lahir,#tanggal_lahir,#jenis_kelamin,#pekerjaan,#alamat')
+              .forEach(el => el.value = '');
+          }
+        });
+    }
+  });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Surat Keterangan Kurang Mampu - {{ data.nama }}</title>
+  <style>
+    body { font-family: "Times New Roman", serif; margin: 40px; }
+    .kop { text-align: center; line-height: 1.4; }
+    .kop h2, .kop h3 { margin: 0; }
+    .kop p { margin: 2px 0; font-size: 12pt; }
+    .judul { text-align: center; margin: 20px 0; text-decoration: underline; font-weight: bold; }
+    .isi { margin: 20px 0; font-size: 12pt; }
+    .ttd { width: 100%; margin-top: 50px; }
+    .ttd .kanan { text-align: right; float: right; }
+    hr { border: 0; border-top: 2px solid #000; margin-top: 6px; }
+  </style>
+</head>
+<body onload="window.print()">
+
+  <!-- Kop Surat -->
+  <div class="kop">
+    <h2>PEMERINTAH KABUPATEN SOPPENG</h2>
+    <h3>KECAMATAN MARIORIWAWO</h3>
+    <h3>DESA GATTARENG TOA</h3>
+    <p>Alamat : Jl. Poros Buludua, Desa Gattareng Toa Kec. Marioriwawo Kab. Soppeng</p>
+    <p>Email : desagattarengtoa0013awo@gmail.com , Kode Pos : 90862</p>
+    <hr>
+  </div>
+
+  <!-- Judul -->
+  <div class="judul">
+    <p>SURAT KETERANGAN KURANG MAMPU</p>
+  </div>
+  <p style="text-align:center;">Nomor : {{ data.no_surat }}</p>
+
+  <!-- Isi -->
+  <div class="isi">
+    <p>Yang bertanda tangan di bawah ini:</p>
+    <table style="margin-left: 30px;">
+      <tr><td width="140px">Nama</td><td>: IRWANSA, S.IP</td></tr>
+      <tr><td>Jabatan</td><td>: Kepala Desa</td></tr>
+    </table>
+
+    <p style="margin-top: 10px;">Dengan ini menerangkan bahwa:</p>
+    <table style="margin-left: 30px;">
+      <tr><td width="180px">Nama</td><td>: {{ data.nama }}</td></tr>
+      <tr><td>Tempat/Tgl Lahir</td><td>: {{ data.tempat_lahir }}, {{ data.tanggal_lahir.strftime('%d-%m-%Y') if data.tanggal_lahir else '' }}</td></tr>
+      <tr><td>NIK</td><td>: {{ data.nik }}</td></tr>
+      <tr><td>Pekerjaan</td><td>: {{ data.pekerjaan }}</td></tr>
+      <tr><td>Alamat</td><td>: {{ data.alamat }}</td></tr>
+    </table>
+
+    <p style="margin-top: 15px;">
+      Oknum yang tersebut namanya di atas benar penduduk Desa Gattareng Toa Kecamatan Marioriwawo Kabupaten Soppeng
+      yang termasuk <b>Penduduk Kurang Mampu</b>.
+    </p>
+
+    <p>Demikian surat keterangan ini diberikan kepada yang bersangkutan untuk dipergunakan sebagaimana mestinya.</p>
+  </div>
+
+  <!-- TTD -->
+  <div class="ttd">
+    <div class="kanan">
+      <p>Gattareng Toa, {{ data.created_at.strftime('%d-%m-%Y') if data.created_at else '' }}</p>
+      <p>Kepala Desa</p>
+      <br><br><br>
+      <p><b>Irwansa, S.IP</b></p>
+    </div>
+  </div>
+
+</body>
+</html>

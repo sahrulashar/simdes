@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}Detail Potensi Desa{% endblock %}
+
+{% block content %}
+<div class="page-title">
+  <div class="title_left">
+    <h3><i class="fa fa-eye"></i> Detail Potensi Desa</h3>
+  </div>
+</div>
+<div class="clearfix"></div>
+
+<div class="row">
+  <div class="col-md-12 col-sm-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>{{ potensi.judul }}</h2>
+        <ul class="nav navbar-right panel_toolbox">
+          <li><a href="{{ url_for('potensi.potensi_index') }}"><i class="fa fa-arrow-left"></i> Kembali</a></li>
+        </ul>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+
+        <p><strong>Tanggal:</strong> {{ potensi.tanggal }}</p>
+        <p><strong>Penulis:</strong> {{ potensi.penulis }}</p>
+        <hr>
+
+        {% for sub in sub_potensi %}
+        <div class="panel panel-default">
+          <div class="panel-heading"><strong>{{ sub.sub_judul }}</strong></div>
+          <div class="panel-body">
+            <p>{{ sub.deskripsi }}</p>
+
+            {% if sub.gambar_list %}
+            <div class="row">
+              {% for img in sub.gambar_list.split(',') %}
+              <div class="col-md-3 col-sm-4 col-xs-6 mb-3">
+                <a href="{{ url_for('static', filename='uploads/potensi/' ~ img) }}" target="_blank">
+                  <img src="{{ url_for('static', filename='uploads/potensi/' ~ img) }}"
+                       class="img-responsive img-thumbnail" alt="Gambar">
+                </a>
+              </div>
+              {% endfor %}
+            </div>
+            {% else %}
+            <p class="text-muted"><em>Tidak ada gambar.</em></p>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

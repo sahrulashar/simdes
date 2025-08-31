@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %}Detail SK Penguburan{% endblock %}
+{% block content %}
+
+<div class="page-title">
+  <div class="title_left">
+    <h3><i class="fa fa-info-circle"></i> Detail Surat Keterangan Penguburan</h3>
+  </div>
+</div>
+<div class="clearfix"></div>
+
+<div class="row">
+  <div class="col-md-8 col-sm-12 col-xs-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2><i class="fa fa-file-text"></i> Informasi Surat</h2>
+        <div class="clearfix"></div>
+      </div>
+
+      <div class="x_content">
+        <table class="table table-bordered">
+          <tr><th>No Surat</th><td>{{ data.no_surat }}</td></tr>
+          <tr><th>NIK</th><td>{{ data.nik }}</td></tr>
+          <tr><th>Nama</th><td>{{ data.nama }}</td></tr>
+          <tr><th>Tempat, Tanggal Lahir</th>
+              <td>{{ data.tempat_lahir }}, {{ data.tanggal_lahir.strftime('%d-%m-%Y') if data.tanggal_lahir else '' }}</td></tr>
+          <tr><th>Jenis Kelamin</th><td>{{ 'Laki-laki' if data.jenis_kelamin == 'L' else 'Perempuan' }}</td></tr>
+          <tr><th>Alamat</th><td>{{ data.alamat }}</td></tr>
+          <tr><th>Hari / Jam Meninggal</th><td>{{ data.hari_meninggal }} / {{ data.jam_meninggal }}</td></tr>
+          <tr><th>Hari, Tanggal Penguburan</th>
+              <td>{{ data.hari_penguburan }}, {{ data.tanggal_penguburan.strftime('%d-%m-%Y') if data.tanggal_penguburan else '' }}</td></tr>
+          <tr><th>Lokasi Penguburan</th><td>{{ data.lokasi_penguburan }}</td></tr>
+          <tr><th>Jam Penguburan</th><td>{{ data.jam_penguburan }}</td></tr>
+          <tr><th>Status</th>
+              <td>
+                {% if data.status == 'approved' %}
+                  <span class="label label-success">Approved</span>
+                {% else %}
+                  <span class="label label-warning">Pending</span>
+                {% endif %}
+              </td></tr>
+          <tr><th>Pembuat Surat</th><td>{{ data.pembuat_surat }}</td></tr>
+          <tr><th>Tanggal Buat</th>
+              <td>{{ data.created_at.strftime('%d-%m-%Y %H:%M') if data.created_at else '' }}</td></tr>
+        </table>
+
+        <a href="{{ url_for('s_penguburan.admin_index') }}" class="btn btn-default">
+          <i class="fa fa-arrow-left"></i> Kembali
+        </a>
+        {% if data.status == 'approved' %}
+          <a href="{{ url_for('s_penguburan.admin_cetak', id=data.id) }}" class="btn btn-secondary" target="_blank">
+            <i class="fa fa-print"></i> Cetak
+          </a>
+        {% else %}
+          <a href="{{ url_for('s_penguburan.admin_approve', id=data.id) }}" class="btn btn-success"
+             onclick="return confirm('Yakin ingin meng-approve surat ini?')">
+            <i class="fa fa-check"></i> Approve Sekarang
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

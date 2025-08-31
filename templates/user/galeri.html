@@ -1,0 +1,29 @@
+{% extends 'base_user.html' %}
+
+{% block content %}
+<!-- HERO SECTION -->
+<section class="hero-potensi" style="background-image: url('{{ url_for('static', filename='images/wave-red.png') }}');">
+  <div class="container text-center text-white py-5">
+    <h1 class="display-5 fw-bold">GALERI DESA GATTARENG TOA</h1>
+  </div>
+</section>
+
+<!-- SECTION ISI GALERI -->
+<section class="galeri-section">
+  <div class="container">
+    <div class="text-center mb-4">
+      <h2>Galeri Desa</h2>
+      <p>Jelajahi dokumentasi kegiatan dan potensi terbaik yang terjadi di desa kami.</p>
+    </div>
+
+    <div class="galeri-grid">
+      {% for item in galeri %}
+        <img src="{{ url_for('static', filename='uploads/galeri/' ~ item.gambar) }}"
+             alt="{{ item.judul }}">
+      {% else %}
+        <p class="text-muted text-center">Belum ada dokumentasi galeri yang tersedia saat ini.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block title %}{{ 'Edit' if edit else 'Tambah' }} Berita{% endblock %}
+{% block content %}
+
+<!-- Judul Halaman -->
+<div class="page-title">
+  <div class="title_left"><h3><i class="fa fa-pencil"></i> {{ 'Edit' if edit else 'Tambah' }} Berita</h3></div>
+</div>
+<div class="clearfix"></div>
+
+<!-- Panel Form -->
+<div class="row">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2><i class="fa fa-file-text"></i> Form Berita</h2>
+        <div class="clearfix"></div>
+      </div>
+
+      <div class="x_content">
+        <form method="POST" enctype="multipart/form-data" class="form-horizontal">
+
+          <!-- Judul -->
+          <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2">Judul</label>
+            <div class="col-md-10 col-sm-10">
+              <input type="text" name="judul" class="form-control" required
+                     value="{{ data.judul if edit else '' }}">
+            </div>
+          </div>
+
+          <!-- Konten -->
+          <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2">Konten</label>
+            <div class="col-md-10 col-sm-10">
+              <textarea name="konten" class="form-control summernote" required>{{ data.konten if edit else '' }}</textarea>
+            </div>
+          </div>
+
+          <!-- Gambar -->
+          <div class="form-group">
+            <label class="control-label col-md-2 col-sm-2">Gambar</label>
+            <div class="col-md-10 col-sm-10">
+              <input type="file" name="gambar" class="form-control">
+              {% if edit and data.gambar %}
+              <p class="mt-2">Gambar saat ini:</p>
+              <img src="{{ url_for('static', filename='uploads/berita/' ~ data.gambar) }}" width="120">
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- Tombol -->
+          <div class="form-group">
+            <div class="col-md-10 col-sm-10 col-md-offset-2">
+              <button type="submit" class="btn btn-success">
+                <i class="fa fa-save"></i> Simpan
+              </button>
+              <a href="{{ url_for('berita.list_berita') }}" class="btn btn-default">
+                <i class="fa fa-arrow-left"></i> Kembali
+              </a>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

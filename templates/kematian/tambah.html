@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+{% block title %}{{ 'Edit' if edit else 'Tambah' }} Data Kematian{% endblock %}
+
+{% block content %}
+<div class="page-title">
+  <div class="title_left"><h3>{{ 'Edit' if edit else 'Tambah' }} Data Kematian</h3></div>
+</div>
+<div class="clearfix"></div>
+
+<div class="row">
+  <div class="col-md-12 col-sm-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Form Kematian</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <form method="POST" autocomplete="off" action="{{ url_for('kematian.edit', id=data.id) if edit else url_for('kematian.tambah') }}">
+          
+          <div class="form-group">
+            <label for="nik">NIK - Nama</label>
+            <input type="text" name="nik" id="nik" class="form-control" required
+                   value="{{ data.nik if edit else '' }}">
+          </div>
+
+          <div class="form-group">
+            <label>Nama</label>
+            <input type="text" name="nama" id="nama" class="form-control" readonly
+                   value="{{ data.nama if edit else '' }}">
+          </div>
+
+          <div class="form-group">
+            <label>Tanggal Lahir</label>
+            <input type="date" name="tanggal_lahir" id="tanggal_lahir" class="form-control" readonly
+                   value="{{ data.tanggal_lahir if edit else '' }}">
+          </div>
+
+          <div class="form-group">
+            <label>Tanggal Meninggal</label>
+            <input type="date" name="tanggal_meninggal" id="tanggal_meninggal" class="form-control" required
+                   value="{{ data.tanggal_meninggal if edit else '' }}">
+          </div>
+
+          <div class="form-group">
+            <label>Tempat Meninggal</label>
+            <input type="text" name="tempat_meninggal" class="form-control" required
+                   value="{{ data.tempat_meninggal if edit else '' }}">
+          </div>
+
+          <div class="form-group">
+            <label>Umur</label>
+            <input type="number" name="umur" id="umur" class="form-control" readonly
+                   value="{{ data.umur if edit else '' }}">
+          </div>
+
+          <div class="form-group">
+            <label>Sebab</label>
+            <input type="text" name="sebab" class="form-control" required
+                   value="{{ data.sebab if edit else '' }}">
+          </div>
+
+          <div class="form-group">
+            <label>Tempat Makam</label>
+            <input type="text" name="tempat_makam" class="form-control" required
+                   value="{{ data.tempat_makam if edit else '' }}">
+          </div>
+
+          <div class="form-group">
+            <label>Pelapor</label>
+            <input type="text" name="pelapor" class="form-control" required
+                   value="{{ data.pelapor if edit else '' }}">
+          </div>
+
+          <div class="form-group">
+            <label>Hubungan Pelapor</label>
+            <input type="text" name="hubungan_pelapor" class="form-control" required
+                   value="{{ data.hubungan_pelapor if edit else '' }}">
+          </div>
+
+          <button type="submit" class="btn btn-success">
+            <i class="fa fa-save"></i> {{ 'Simpan Perubahan' if edit else 'Simpan' }}
+          </button>
+          <a href="{{ url_for('kematian.index') }}" class="btn btn-secondary">
+            <i class="fa fa-arrow-left"></i> Kembali
+          </a>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- jQuery UI -->
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+
+<script>
+  $(function () {
+    $('#nik').autocomplete({
+      source: function (request, response) {
+        $.ajax({
+          url: "{{ url_for('kematian.cari_nik') }}",
+          data: { term: request.term },
+          success: function (data) {
+            response(data);
+          }
+        });
+      },
+      minLength: 2,
+      select: function (event, ui) {
+        const selected = ui.item.value;
+        const nik = selected.split(' - ')[0];
+        $('#nik').val(nik).trigger('change');
+        return false;
+      }
+    });
+
+    $('#nik').on('change', function () {
+      const nik = $(this).val();
+      if (nik.length >= 10) {
+        $.getJSON(`/kematian/penduduk/${nik}`, function (data) {
+          $('#nama').val(data.nama || '');
+          $('#tanggal_lahir').val(data.tanggal_lahir || '');
+          hitungUmur(); // Hitung umur saat tanggal lahir didapat
+        }).fail(function () {
+          $('#nama').val('');
+          $('#tanggal_lahir').val('');
+          $('#umur').val('');
+        });
+      }
+    });
+
+    $('#tanggal_meninggal').on('change', hitungUmur);
+  });
+
+  function hitungUmur() {
+    const tglLahir = document.getElementById('tanggal_lahir').value;
+    const tglMeninggal = document.getElementById('tanggal_meninggal').value;
+
+    if (tglLahir && tglMeninggal) {
+      const lahir = new Date(tglLahir);
+      const meninggal = new Date(tglMeninggal);
+
+      let umur = meninggal.getFullYear() - lahir.getFullYear();
+      const mDiff = meninggal.getMonth() - lahir.getMonth();
+      const dDiff = meninggal.getDate() - lahir.getDate();
+
+      if (mDiff < 0 || (mDiff === 0 && dDiff < 0)) {
+        umur--;
+      }
+
+      if (umur >= 0 && umur <= 130) {
+        document.getElementById('umur').value = umur;
+      } else {
+        document.getElementById('umur').value = '';
+      }
+    }
+  }
+</script>
+{% endblock %}

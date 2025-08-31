@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% block title %}Edit Potensi Desa{% endblock %}
+{% block content %}
+
+<div class="page-title">
+  <div class="title_left">
+    <h3><i class="fa fa-map-marker"></i> Edit Potensi Desa</h3>
+  </div>
+</div>
+<div class="clearfix"></div>
+
+<div class="row">
+  <div class="col-md-10 col-sm-12 col-xs-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2><i class="fa fa-edit"></i> Form Edit Potensi</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+
+        <form method="POST" action="{{ url_for('potensi.potensi_edit', id=potensi.id) }}"
+              enctype="multipart/form-data" class="form-horizontal">
+
+          <!-- Judul -->
+          <div class="form-group">
+            <label class="control-label col-md-3">Judul</label>
+            <div class="col-md-9">
+              <input type="text" name="judul" class="form-control" required value="{{ potensi.judul }}">
+            </div>
+          </div>
+
+          <!-- Tanggal -->
+          <div class="form-group">
+            <label class="control-label col-md-3">Tanggal</label>
+            <div class="col-md-9">
+              <input type="date" name="tanggal" class="form-control" required value="{{ potensi.tanggal }}">
+            </div>
+          </div>
+
+          <!-- Penulis -->
+          <div class="form-group">
+            <label class="control-label col-md-3">Penulis</label>
+            <div class="col-md-9">
+              <input type="text" name="penulis" class="form-control" required value="{{ potensi.penulis }}">
+            </div>
+          </div>
+
+          <hr>
+          <h4 class="text-center">Sub Judul & Gambar</h4>
+
+          <div id="subjudul-container">
+            {% for sub in sub_potensi %}
+            {% set i = loop.index0 %}
+            <div class="subjudul-block mb-4">
+              <div class="form-group">
+                <label class="control-label col-md-3">Sub Judul</label>
+                <div class="col-md-9">
+                  <input type="text" name="sub_judul[]" class="form-control" required value="{{ sub.sub_judul }}">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-md-3">Deskripsi</label>
+                <div class="col-md-9">
+                  <textarea name="deskripsi[]" class="form-control" rows="3" required>{{ sub.deskripsi }}</textarea>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-md-3">Gambar Saat Ini</label>
+                <div class="col-md-9">
+                  {% if sub.gambar_list %}
+                    {% for img in sub.gambar_list.split(',') %}
+                      <img src="{{ url_for('static', filename='uploads/potensi/' ~ img) }}"
+                           width="120" style="margin:5px;" class="img-thumbnail">
+                    {% endfor %}
+                  {% else %}
+                    <p class="text-muted">Tidak ada gambar</p>
+                  {% endif %}
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="control-label col-md-3">Tambah Gambar Baru</label>
+                <div class="col-md-9">
+                  <input type="file" name="gambar_{{ i }}[]" class="form-control" multiple>
+                </div>
+              </div>
+
+              <hr>
+            </div>
+            {% endfor %}
+          </div>
+
+          <!-- Tambah Subjudul Baru -->
+          <div class="form-group">
+            <div class="col-md-9 col-md-offset-3">
+              <button type="button" class="btn btn-secondary btn-sm" id="tambah-subjudul">
+                <i class="fa fa-plus"></i> Tambah Sub Judul
+              </button>
+            </div>
+          </div>
+
+          <!-- Tombol Simpan -->
+          <div class="form-group">
+            <div class="col-md-9 col-md-offset-3">
+              <a href="{{ url_for('potensi.potensi_index') }}" class="btn btn-default">Batal</a>
+              <button type="submit" class="btn btn-success">
+                <i class="fa fa-save"></i> Simpan Perubahan
+              </button>
+            </div>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+  let subIndex = {{ sub_potensi|length }};
+
+  $('#tambah-subjudul').click(function () {
+    const block = `
+      <div class="subjudul-block mb-4">
+        <div class="form-group">
+          <label class="control-label col-md-3">Sub Judul</label>
+          <div class="col-md-9">
+            <input type="text" name="sub_judul[]" class="form-control" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label col-md-3">Deskripsi</label>
+          <div class="col-md-9">
+            <textarea name="deskripsi[]" class="form-control" rows="3" required></textarea>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label col-md-3">Upload Gambar</label>
+          <div class="col-md-9">
+            <input type="file" name="gambar_${subIndex}[]" class="form-control" multiple>
+          </div>
+        </div>
+
+        <hr>
+      </div>
+    `;
+    $('#subjudul-container').append(block);
+    subIndex++;
+  });
+</script>
+{% endblock %}

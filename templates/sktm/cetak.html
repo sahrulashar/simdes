@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Cetak SKTM - {{ data.no_surat }}</title>
+  <style>
+    body {
+      font-family: "Times New Roman", serif;
+      font-size: 12pt;
+      margin: 30px 50px;
+      color: #000;
+    }
+
+    .kop-container {
+      display: flex;
+      align-items: center;
+      border-bottom: 3px solid black;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+
+    .kop-logo {
+      width: 80px;
+      height: 80px;
+      margin-right: 20px;
+    }
+
+    .kop-text {
+      text-align: center;
+      flex: 1;
+    }
+
+    .kop-text h3, .kop-text h2, .kop-text p {
+      margin: 0;
+    }
+
+    .kop-text h2 {
+      font-size: 18pt;
+      text-transform: uppercase;
+    }
+
+    .kop-text h3 {
+      font-size: 14pt;
+    }
+
+    .kop-text p {
+      font-size: 11pt;
+    }
+
+    h3.title {
+      text-align: center;
+      margin-top: 10px;
+      text-decoration: underline;
+      font-size: 14pt;
+    }
+
+    p.nomor {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    table.detail {
+      width: 100%;
+      margin-top: 10px;
+      margin-bottom: 20px;
+    }
+
+    table.detail td {
+      padding: 4px;
+      vertical-align: top;
+    }
+
+    .isi {
+      margin-top: 15px;
+      margin-bottom: 30px;
+      text-align: justify;
+    }
+
+    .ttd {
+      width: 50%;
+      text-align: center;
+      float: right;
+      margin-top: 20px;
+    }
+
+    .ttd p {
+      margin: 0;
+    }
+  </style>
+</head>
+<body onload="window.print()">
+
+  <!-- KOP SURAT -->
+  <div class="kop-container">
+    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="kop-logo">
+    <div class="kop-text">
+      <h3>PEMERINTAH KABUPATEN SOPPENG</h3>
+      <h2>DESA {{ data.alamat.split(',')[0] }}</h2>
+      <p>KECAMATAN MARIORIWAWO</p>
+      <p>Alamat: {{ data.alamat }}</p>
+    </div>
+  </div>
+
+  <!-- JUDUL SURAT -->
+  <h3 class="title">SURAT KETERANGAN TIDAK MAMPU</h3>
+  <p class="nomor">Nomor: {{ data.no_surat }}</p>
+
+  <!-- ISI SURAT -->
+  <p>Yang bertanda tangan di bawah ini, Kepala Desa menyatakan bahwa:</p>
+
+  <table class="detail">
+    <tr><td width="35%">Nama</td><td>: {{ data.nama }}</td></tr>
+    <tr><td>NIK</td><td>: {{ data.nik }}</td></tr>
+    <tr><td>Nomor KK</td><td>: {{ data.no_kk }}</td></tr>
+    <tr><td>Jenis Kelamin</td><td>: {{ 'Laki-laki' if data.jenis_kelamin == 'L' else 'Perempuan' }}</td></tr>
+    <tr><td>Tempat, Tanggal Lahir</td><td>: {{ data.tempat_lahir }}, {{ data.tanggal_lahir.strftime('%d-%m-%Y') if data.tanggal_lahir else '' }}</td></tr>
+    <tr><td>Alamat</td><td>: {{ data.alamat }}</td></tr>
+  </table>
+
+  <div class="isi">
+    Adalah benar warga Desa {{ data.alamat.split(',')[0] }} yang berdasarkan pengamatan kami termasuk dalam kategori <strong>tidak mampu</strong>.
+    Surat ini dibuat untuk keperluan: <strong>{{ data.keperluan }}</strong>.
+
+    <br><br>
+    Demikian surat ini dibuat agar dapat dipergunakan sebagaimana mestinya.
+  </div>
+
+  <!-- TTD -->
+  <div class="ttd">
+    <p>{{ data.created_at.strftime('%d %B %Y') if data.created_at else '' }}</p>
+    <p>Kepala Desa</p>
+    <br><br><br>
+    <p style="text-decoration: underline;"><strong>Nama Kepala Desa</strong></p>
+  </div>
+
+</body>
+</html>

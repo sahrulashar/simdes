@@ -1,0 +1,265 @@
+{% extends "base_user.html" %}
+
+{% block title %}Beranda - Desa Gattareng Toa{% endblock %}
+
+{% block content %}
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-overlay">
+      <img src="{{ url_for('static', filename='images/logo.png') }}" class="hero-logo" alt="Logo Desa">
+      <h1 class="hero-title">SELAMAT DATANG DI WEBSITE RESMI</h1>
+      <h2 class="hero-subtitle">DESA GATTARENG TOA</h2>
+    </div>
+  </section>
+
+  <!-- Strip Merah Selamat Datang -->
+  <div class="strip-welcome">
+    SELAMAT DATANG DI WEBSITE DESA GATTARENG TOA
+  </div>
+
+  <!-- Jelajahi Desa Section -->
+  <section class="jelajahi-desa">
+    <div class="jelajahi-container">
+      <div class="jelajahi-left">
+        <h2>JELAJAHI DESA</h2>
+        <h4>KENALI DESA GATTARENG TOA LEBIH DEKAT</h4>
+        <p>
+          Melalui website ini Anda dapat menjelajahi segala hal yang terkait dengan Desa.
+          Aspek pemerintahan, penduduk, demografi, potensi Desa, dan juga berita tentang Desa.
+        </p>
+      </div>
+      <div class="jelajahi-right">
+        <a href="{{ url_for('landing.index') }}" class="jelajahi-btn"><i class="fas fa-id-card"></i> PROFIL DESA</a>
+        <a href="{{ url_for('landing.potensi_desa_user')}}" class="jelajahi-btn"><i class="fas fa-seedling"></i> POTENSI DESA</a>
+        <a href="{{ url_for('landing.galeri_user')}}" class="jelajahi-btn"><i class="fas fa-image"></i> GALERI</a>
+        <a href="{{ url_for('landing.user_berita_list') }}" class="jelajahi-btn"><i class="fas fa-newspaper"></i> BERITA</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sambutan Kepala Desa -->
+  <section class="sambutan-kades">
+    <div class="sambutan-container">
+      
+      <!-- Kolom kiri: Foto + nama -->
+      <div class="sambutan-foto">
+        <img src="{{ url_for('static', filename='images/kepala desa.jpeg') }}" alt="Kepala Desa">
+      </div>
+
+      <!-- Kolom kanan: Teks sambutan -->
+      <div class="sambutan-teks">
+        <h2>SAMBUTAN KEPALA DESA GATTARENG TOA</h2>
+        <div class="kades-nama">IRWANSA, S.IP</div>
+        <p>
+          Puji syukur kita panjatkan ke hadirat Allah SWT, Tuhan Yang Maha Esa, karena atas rahmat dan karunia-Nya, website resmi Desa Gattareng Toa ini dapat kami hadirkan sebagai sarana informasi dan komunikasi masyarakat.
+          Website ini diharapkan menjadi jembatan yang mempererat hubungan antara pemerintah desa dan warga, serta sebagai etalase digital untuk menampilkan potensi, kegiatan, dan perkembangan pembangunan desa kami.
+          <br><br>
+          Di era digital saat ini, keterbukaan informasi menjadi kunci kemajuan. Melalui media ini, kami ingin memastikan bahwa seluruh lapisan masyarakat memiliki akses terhadap layanan, data, dan kebijakan desa secara transparan, cepat, dan akurat.
+          Kami mengajak seluruh masyarakat Desa Gattareng Toa untuk bersama-sama menjaga, memanfaatkan, dan mendukung keberlangsungan media ini demi kemajuan desa kita tercinta.
+          <br><br>
+          Terima kasih atas partisipasi dan dukungan semua pihak.
+          <br><br>
+          Wassalamu’alaikum warahmatullahi wabarakatuh.
+        </p>
+        <h4>Kepala Desa Gattareng Toa</h4>
+      </div>
+    </div>
+  </section>
+  <section class="peta-desa">
+    <!-- Strip Merah -->
+    <div class="strip-section">
+      PETA DESA GATTARENG TOA
+    </div>
+
+    <div class="peta-container">
+      <div class="peta-grid">
+        
+        <!-- Kiri: Tabel dan Deskripsi -->
+        <div class="peta-info">
+          <table class="peta-table">
+            <thead>
+              <tr>
+                <th>ARAH</th>
+                <th>PEMBATAS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>UTARA</td><td>KABUPATEN BONE</td></tr>
+              <tr><td>TIMUR</td><td>KABUPATEN BONE DAN BARRU</td></tr>
+              <tr><td>SELATAN</td><td>KABUPATEN BARRU</td></tr>
+              <tr><td>BARAT</td><td>DESA KECAMATAN MARIORIWAWO</td></tr>
+            </tbody>
+          </table>
+
+          <div class="peta-deskripsi">
+            <p><strong>Sebelah Utara:</strong> Desa Gattareng Toa berbatasan langsung dengan Kabupaten Bone, menempati sepanjang punggung bukit yang merupakan batas alami antara dua wilayah administratif.</p>
+            <p><strong>Sebelah Selatan:</strong> Wilayah selatan berbatasan dengan Kabupaten Barru. Batas ini berada pada area pertanian dan perbukitan yang relatif lembab.</p>
+            <p><strong>Sebelah Timur:</strong> Wilayah timur berbatasan ganda dengan Kabupaten Bone dan Barru, mencakup perbukitan serta aliran sungai kecil.</p>
+            <p><strong>Sebelah Barat:</strong> Berbatasan dengan desa-desa dalam lingkup Kecamatan Marioriwawo. Batas administratif ini lebih teratur.</p>
+          </div>
+        </div>
+
+        <!-- Kanan: Peta -->
+        <div class="peta-img">
+          <img src="{{ url_for('static', filename='images/petadesa.png') }}" alt="Peta Desa Gattareng Toa">
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SOTK Section -->
+  <section class="sotk-section">
+    <div class="sotk-container">
+      <h2 class="sotk-title">APARAT DESA GATTARENG TOA</h2>
+      <p class="sotk-subtitle">Tata Kerja Desa Gattareng Toa</p>
+
+      <div class="swiper sotk-swiper">
+        <div class="swiper-wrapper">
+          {% for a in aparat %}
+          <div class="swiper-slide sotk-card">
+            <img src="{{ url_for('static', filename='uploads/aparat/' ~ a.foto) }}" alt="Foto Aparat">
+            <div class="sotk-info">
+              <h4>{{ a.nama }}</h4>
+              <p>{{ a.jabatan }}</p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        <!-- Navigasi -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Administrasi Penduduk -->
+  <section class="administrasi-section">
+    <div class="container">
+      <h2 class="admin-title">ADMINISTRASI PENDUDUK</h2>
+      <p class="admin-subtitle">
+        Sistem digital yang berfungsi mempermudah pengelolaan data dan informasi terkait dengan kependudukan dan
+        pendayagunaannya untuk pelayanan publik yang efektif dan efisien
+      </p>
+
+      <div class="admin-table">
+        <div class="admin-row">
+          <div class="admin-label"><i class="bi bi-people-fill"></i> <span>Penduduk</span></div>
+          <div class="admin-jumlah" data-target="{{ total_penduduk }}">0</div>
+        </div>
+        <div class="admin-row">
+          <div class="admin-label"><i class="bi bi-house-fill"></i> <span>Kepala Keluarga</span></div>
+          <div class="admin-jumlah" data-target="{{ total_kk }}">0</div>
+        </div>
+        <div class="admin-row">
+          <div class="admin-label"><i class="bi bi-gender-male"></i> <span>Laki-Laki</span></div>
+          <div class="admin-jumlah" data-target="{{ total_laki }}">0</div>
+        </div>
+        <div class="admin-row">
+          <div class="admin-label"><i class="bi bi-gender-female"></i> <span>Perempuan</span></div>
+          <div class="admin-jumlah" data-target="{{ total_perempuan }}">0</div>
+        </div>
+        <div class="admin-row">
+          <div class="admin-label"><i class="bi bi-person-lines-fill"></i> <span>Penduduk Sementara</span></div>
+          <div class="admin-jumlah" data-target="{{ total_sementara }}">0</div>
+        </div>
+        <div class="admin-row">
+          <div class="admin-label"><i class="bi bi-arrow-left-right"></i> <span>Mutasi Penduduk</span></div>
+          <div class="admin-jumlah" data-target="{{ total_mutasi }}">0</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Galeri Desa -->
+  <section class="galeri-section">
+    <div class="container">
+      <h2 class="galeri-title">GALERI DESA</h2>
+      <p class="galeri-subtitle">Menampilkan kegiatan - kegiatan yang berlangsung di desa</p>
+
+      <div class="galeri-grid">
+        {% for g in galeri[:6] %}
+        <div class="galeri-item">
+          <img src="{{ url_for('static', filename='uploads/galeri/' ~ g.gambar) }}" alt="Galeri">
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="lihat-lebih">
+        <a href="#">Lihat Lebih Banyak</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== BERITA DESA ========== -->
+  <section class="berita-section">
+    <div class="container">
+      <h2 class="berita-title">BERITA DESA</h2>
+      <p class="berita-subtitle">
+        Menyajikan informasi terbaru tentang peristiwa, berita terkini, dan artikel-artikel jurnalistik dari Desa Gattareng Toa
+      </p>
+
+      <div class="berita-grid">
+        {% for b in berita_terbaru %}
+        <div class="berita-card">
+            <a href="{{ url_for('landing.detail_berita_user', slug=b.slug) }}">
+            <img src="{{ url_for('static', filename='uploads/berita/' ~ b.gambar) }}" alt="{{ b.judul }}">
+          </a>
+          <div class="berita-body">
+            <h3>{{ b.judul }}</h3>
+            <p>{{ b.konten[:200]|safe }}...</p>
+          </div>
+          <div class="berita-tanggal">{{ b.created_at.strftime('%d %B %Y') }}</div>
+          <div class="berita-author">{{ b.pembuat }}</div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="lihat-lebih text-right">
+        <a href="#">Lihat Berita Lebih Banyak</a>
+      </div>
+    </div>
+  </section>
+
+   <!-- Potensi Section -->
+    <section id="potensi" class="section-potensi py-5">
+      <div class="container">
+        <h2 class="judul-potensi">POTENSI DESA</h2>
+        <p class="subjudul-potensi">Informasi tentang potensi dan kemajuan Desa di berbagai bidang</p>
+
+        {% for potensi in potensi_list %}
+        <div class="potensi-item mb-4">
+          <!-- Gambar -->
+          <div class="potensi-img-wrapper">
+            <img src="{{ url_for('static', filename='uploads/potensi/' + potensi.gambar) }}"
+                alt="{{ potensi.judul }}">
+          </div>
+
+          <!-- Box kategori -->
+          <a href="#"
+            class="potensi-box">
+            {{ potensi.sub_judul|upper }}
+          </a>
+        </div>
+        {% endfor %}
+        <div class="lihat-potensi-wrapper">
+          <a href="#" class="lihat-lebih-banyak-link">
+            Lihat Pontesi yang Lainnya
+          </a>
+        </div>
+      </div>
+    </section>
+
+
+
+
+
+
+
+
+{% endblock %}

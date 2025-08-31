@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Dashboard{% endblock %}</title>
+
+  <!-- jQuery UI CSS (Autocomplete) -->
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+
+  <!-- Bootstrap -->
+  <link href="{{ url_for('static', filename='gentelella/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="{{ url_for('static', filename='gentelella/vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+  <!-- Gentelella -->
+  <link href="{{ url_for('static', filename='gentelella/build/css/custom.min.css') }}" rel="stylesheet">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap.min.css">
+  <!-- Summernote CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+
+  <style>
+    .left_col.scroll-view {
+      overflow-y: auto;
+      max-height: 100vh;
+    }
+    .table th, .table td {
+      vertical-align: middle !important;
+      font-size: 14px;
+    }
+    thead.thead-dark th {
+      background-color: #2A3F54;
+      color: #fff;
+    }
+    .form-inline .form-control {
+      margin-right: 10px;
+    }
+  </style>
+
+  {% block head %}{% endblock %}
+</head>
+
+<body class="nav-md">
+  <div class="container body">
+    <div class="main_container">
+
+      <!-- SIDEBAR -->
+      <div class="col-md-3 left_col">
+        <div class="left_col scroll-view">
+          <div class="navbar nav_title" style="border: 0;">
+            <a href="{{ url_for('dashboard.dashboard') }}" class="site_title">
+              <i class="fa fa-home"></i> <span>Desa Admin</span>
+            </a>
+          </div>
+          <div class="clearfix"></div>
+
+          <!-- PROFILE INFO -->
+          <div class="profile clearfix">
+            <div class="profile_pic">
+              <img src="{{ url_for('static', filename='gentelella/production/images/user.png') }}" alt="..." class="img-circle profile_img">
+            </div>
+            <div class="profile_info">
+              <span>Selamat datang,</span>
+              <h2>{{ session.nama }}</h2>
+            </div>
+          </div>
+          <br />
+
+          <!-- SIDEBAR MENU -->
+          <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+            <div class="menu_section">
+              <h3>Menu</h3>
+              <ul class="nav side-menu">
+                <li><a href="{{ url_for('dashboard.dashboard') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+                <li><a href="{{ url_for('aparat.list_aparat')}}"><i class="fa fa-user"></i> Aparat Desa</a></li>
+                <li><a href="{{ url_for('kk.index') }}"><i class="fa fa-users"></i> Kartu Keluarga</a></li>
+                <li><a href="{{ url_for('penduduk.index') }}"><i class="fa fa-user"></i> Penduduk</a></li>
+                <li><a href="{{ url_for('kelahiran.index') }}"><i class="fa fa-birthday-cake"></i> Kelahiran</a></li>
+                <li><a href="{{ url_for('kematian.index') }}"><i class="fa fa-heartbeat"></i> Kematian</a></li>
+                <li><a href="{{ url_for('kepindahan.index')}}"><i class="fa fa-sign-out"></i> Kepindahan</a></li>
+                <li><a href="{{ url_for('pendatang.index')}}"><i class="fa fa-truck"></i> Pendatang</a></li>
+                <li><a href="{{ url_for('skm.admin_index') }}"><i class="fa fa-envelope"></i> SKTM</a></li>
+                <li><a href="{{ url_for('sku.admin_index') }}"><i class="fa fa-briefcase"></i> SKU</a></li>
+                <li><a href="{{ url_for('belum_nikah.admin_index') }}"><i class="fa fa-heart"></i> SKBM</a></li>
+                <li><a href="{{ url_for('hilang.admin_index') }}"><i class="fa fa-file-text"></i> SK Hilang</a></li>
+                <li><a href="{{ url_for('keramaian.admin_index') }}"><i class="fa fa-users"></i> Surat Keramaian</a></li>
+                <li><a href="{{ url_for('merantau.admin_index') }}"><i class="fa fa-plane"></i> SK Merantau</a></li>  
+                <li><a href="{{ url_for('cerai.admin_index') }}"><i class="fa fa-file-text"></i> SK Cerai</a></li>    
+                <li><a href="{{ url_for('izin_potong.admin_index') }}"><i class="fa fa-cutlery"></i> SK Izin Potong</a></li>
+                <li><a href="{{ url_for('s_kematian.admin_index') }}"><i class="fa fa-file-text"></i> SK Kematian</a></li>
+                <li><a href="{{ url_for('s_penguburan.admin_index') }}"><i class="fa fa-file-text"></i> SK Penguburan</a></li>
+
+                <li><a href="{{ url_for('berita.list_berita')}}"><i class="fa fa-newspaper-o"></i> Berita</a></li>
+                <li><a href="{{ url_for('galeri.index' )}}"><i class="fa fa-image"></i> Galeri</a></li>
+                <li><a href="{{ url_for('potensi.potensi_index' )}}"><i class="fa fa-image"></i> Potensi Desa</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /SIDEBAR -->
+
+      <!-- TOP NAV -->
+      <div class="top_nav">
+        <div class="nav_menu">
+          <nav>
+            <div class="nav toggle">
+              <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+            </div>
+
+            <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+                <a href="#" class="user-profile dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  <img src="{{ url_for('static', filename='gentelella/production/images/user.png') }}" alt="Foto Profil">
+                  {{ session.nama }}
+                  <span class="fa fa-angle-down"></span>
+                </a>
+                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                  <li><a href="#"><i class="fa fa-user pull-right"></i> Profil</a></li>
+                  <li><a href="{{ url_for('auth.logout') }}"><i class="fa fa-sign-out pull-right"></i> Keluar</a></li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+      <!-- /TOP NAV -->
+
+      <!-- PAGE CONTENT -->
+      <div class="right_col" role="main" style="min-height: 100vh;">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+      </div>
+      <!-- /PAGE CONTENT -->
+
+      <!-- FOOTER -->
+      <footer>
+        <div class="pull-right">
+          Sistem Informasi Desa © 2025
+        </div>
+        <div class="clearfix"></div>
+      </footer>
+      <!-- /FOOTER -->
+
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+  <script src="{{ url_for('static', filename='gentelella/vendors/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+  <script src="{{ url_for('static', filename='gentelella/build/js/custom.min.js') }}"></script>
+  <script>
+    $(document).ready(function () {
+      $('.datatable').DataTable({
+        "language": {
+          "lengthMenu": "Tampilkan _MENU_ entri per halaman",
+          "zeroRecords": "Tidak ada data ditemukan",
+          "info": "Menampilkan halaman _PAGE_ dari _PAGES_",
+          "infoEmpty": "Tidak ada data tersedia",
+          "infoFiltered": "(difilter dari total _MAX_ entri)",
+          "search": "Cari:",
+          "paginate": {
+            "previous": "Sebelumnya",
+            "next": "Berikutnya"
+          }
+        }
+      });
+
+      // Dropdown toggle (untuk Bootstrap 3)
+      $('.dropdown-toggle').dropdown();
+
+      // Responsive nav toggle
+      if ($(window).width() < 768) {
+        $('body').removeClass('nav-md').addClass('nav-sm');
+      }
+    });
+
+      $(document).ready(function () {
+    $('.summernote').summernote({
+      height: 250,
+      toolbar: [
+        ['style', ['bold', 'italic', 'underline', 'clear']],
+        ['font', ['fontsize', 'color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['insert', ['link', 'picture']],  // aktifkan tombol Picture
+        ['view', ['fullscreen', 'codeview']]
+      ]
+    });
+  });
+  </script>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

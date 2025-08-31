@@ -1,0 +1,46 @@
+{% extends 'base_user.html' %}
+
+{% block content %}
+<!-- HERO SECTION -->
+<section class="hero-potensi" style="background-image: url('{{ url_for('static', filename='images/wave-red.png') }}');">
+  <div class="container text-center text-white py-5">
+    <h1 class="display-5 fw-bold">POTENSI DESA GATTARENG TOA</h1>
+    <p class="lead">Informasi Potensi Desa Gattareng Toa</p>
+  </div>
+</section>
+
+<!-- DETAIL POTENSI SECTION -->
+<section class="potensi-detail bg-white py-5">
+  <div class="container">
+    <!-- Judul Potensi -->
+    <div class="text-center mb-4 animate__animated animate__fadeInDown">
+      <h2 class="text-danger fw-bold text-uppercase">
+        POTENSI {{ potensi.judul }} - {{ potensi.tanggal.strftime('%d %B %Y') }}
+      </h2>
+      <p class="text-muted small">
+        Deskripsi Potensi – <strong>{{ potensi.penulis }}</strong>
+      </p>
+    </div>
+
+    <!-- Loop Subpotensi -->
+    {% for sub in subpotensi_list %}
+    <div class="mb-5 animate__animated animate__fadeInUp animate__delay-{{ loop.index }}s">
+      <!-- Judul Subpotensi -->
+      <h5 class="fw-bold text-danger mb-3">{{ loop.index }}. {{ sub.sub_judul }}</h5>
+
+      <!-- Gambar Subpotensi -->
+      {% if sub.file_gambar %}
+      <div class="mb-4">
+        <img src="{{ url_for('static', filename='uploads/potensi/' ~ sub.file_gambar) }}"
+             alt="{{ sub.sub_judul }}"
+             class="img-fluid potensi-full-img">
+      </div>
+      {% endif %}
+
+      <!-- Deskripsi Subpotensi -->
+      <p class="text-dark">{{ sub.deskripsi }}</p>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

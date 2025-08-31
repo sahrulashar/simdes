@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ potensi.judul }} - Desa Gattareng Toa</title>
+  <link rel="icon" href="{{ url_for('static', filename='ilanding/img/soppeng.png') }}">
+  <link href="{{ url_for('static', filename='ilanding/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='ilanding/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='ilanding/assets/vendor/aos/aos.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='ilanding/assets/css/main.css') }}" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl d-flex justify-content-between align-items-center">
+      <a href="{{ url_for('landing.landing') }}" class="logo d-flex align-items-center">
+        <img src="{{ url_for('static', filename='ilanding/img/soppeng.png') }}" alt="Logo">
+        <h1 class="sitename">Desa Gattareng Toa</h1>
+      </a>
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="{{ url_for('landing.landing') }}">Beranda</a></li>
+          <li><a href="{{ url_for('landing.potensi_user') }}">Potensi Desa</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main mt-5 pt-5">
+
+<!-- Judul Potensi -->
+<section class="section text-center mt-5 pt-5">
+  <div class="container" data-aos="fade-up">
+    <h2 class="fw-bold">{{ potensi.judul }}</h2>
+    <p class="text-muted">
+      <i class="bi bi-calendar"></i> {{ potensi.tanggal.strftime('%d-%m-%Y') }} |
+      <i class="bi bi-person"></i> {{ potensi.penulis }}
+    </p>
+  </div>
+</section>
+
+<!-- Detail Subpotensi -->
+<section class="section">
+  <div class="container" data-aos="fade-up">
+    {% if sub_potensi_list %}
+      {% for sub in sub_potensi_list %}
+      <div class="mb-5">
+        <h4 class="fw-bold">{{ sub.sub_judul }}</h4>
+        <p>{{ sub.deskripsi }}</p>
+
+        {% if sub.gambar_list %}
+        <div class="row g-3">
+          {% for gbr in sub.gambar_list %}
+          <div class="col-6 col-md-4 col-lg-3">
+            <img src="{{ url_for('static', filename='uploads/potensi/' ~ gbr) }}"
+                 class="img-fluid rounded shadow-sm"
+                 alt="Gambar">
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+      {% endfor %}
+    {% else %}
+      <p class="text-danger">Belum ada sub potensi.</p>
+    {% endif %}
+
+    <a href="{{ url_for('landing.potensi_user') }}" class="btn btn-outline-primary mt-4">
+      <i class="bi bi-arrow-left"></i> Kembali ke Potensi Desa
+    </a>
+  </div>
+</section>
+
+
+  </main>
+
+  <footer class="footer mt-5">
+    <div class="container text-center">
+      <p>© {{ current_year }} Desa Gattareng Toa. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="{{ url_for('static', filename='ilanding/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='ilanding/assets/vendor/aos/aos.js') }}"></script>
+  <script src="{{ url_for('static', filename='ilanding/assets/js/main.js') }}"></script>
+</body>
+
+</html>

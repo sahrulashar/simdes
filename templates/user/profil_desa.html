@@ -1,0 +1,196 @@
+{% extends "base_user.html" %}
+
+{% block title %}Profil Desa Gattareng Toa{% endblock %}
+
+{% block content %}
+
+<!-- HERO SECTION -->
+<section class="hero-profil">
+  <div class="container text-center text-white py-5">
+    <h1 class="display-4 fw-bold">PROFIL DESA GATTARENG TOA</h1>
+    <p class="lead">Informasi umum mengenai sejarah, letak geografis, visi, dan misi desa</p>
+  </div>
+</section>
+
+<!-- SEJARAH DESA -->
+<section class="sejarah-desa py-5">
+  <div class="container">
+    <h2 class="fw-bold text-danger mb-4">SEJARAH DESA GATTARENG TOA</h2>
+    <p>
+      Desa Gattareng Toa merupakan salah satu desa tertua di wilayah Kecamatan Marioriwawo, Kabupaten Soppeng, Sulawesi Selatan.
+      Nama “Gattareng” berasal dari bahasa Bugis yang mengandung arti “tempat perlindungan” atau “tempat berlindung”, 
+      sedangkan kata “Toa” berarti “tua” atau “lama”. Secara harfiah, Gattareng Toa dapat dimaknai sebagai daerah perlindungan lama, 
+      yang menjadi cikal bakal pemukiman masyarakat di wilayah ini.
+    </p>
+    <p>
+      Sejak zaman dahulu, daerah ini dikenal sebagai tempat bermukimnya para peladang dan petani yang menggantungkan hidup dari hasil alam. 
+      Letaknya yang berada di antara bukit dan sungai menjadikan wilayah ini subur dan strategis sebagai tempat tinggal serta pertahanan. 
+      Keberadaan sumber mata air alami serta kesuburan tanah membuat Gattareng Toa tumbuh menjadi pusat kehidupan masyarakat agraris di masa silam.
+    </p>
+    <p>
+      Dalam perkembangan sejarah lokal, Gattareng Toa juga menjadi bagian penting dalam jaringan peradaban Bugis, 
+      terutama dalam hal sistem kekerabatan, adat istiadat, dan semangat gotong royong yang hingga kini masih dijaga oleh warganya. 
+      Banyak kisah lisan dan nilai-nilai budaya diwariskan secara turun temurun, menjadikan desa ini tidak hanya kaya secara geografis 
+      tetapi juga secara kultural.
+    </p>
+    <p>
+      Dengan ditetapkannya sebagai desa administratif secara resmi, Gattareng Toa mulai mengembangkan sistem pemerintahan desa modern 
+      sejak era otonomi daerah diberlakukan. Sejak saat itu, pembangunan infrastruktur, pendidikan, dan layanan publik terus digalakkan 
+      untuk meningkatkan kesejahteraan masyarakat.
+    </p>
+    <p>
+      Hari ini, Desa Gattareng Toa tidak hanya dikenal karena kekayaan sejarah dan budayanya, tetapi juga karena semangat masyarakatnya 
+      yang adaptif terhadap perkembangan zaman, sembari tetap menjaga nilai-nilai kearifan lokal sebagai warisan leluhur.
+    </p>
+  </div>
+</section>
+
+<!-- LETAK GEOGRAFIS -->
+<section class="letak-geografis py-4 pb-2">
+  <div class="container">
+    <h2 class="fw-bold text-danger mb-4 text-uppercase">Letak Geografis</h2>
+    <p>
+      Desa Gattareng Toa terletak di wilayah timur laut Kecamatan Marioriwawo, Kabupaten Soppeng, Provinsi Sulawesi Selatan.
+      Secara topografis, desa ini berada di kawasan yang didominasi oleh perbukitan dengan kontur tanah yang bervariasi,
+      mulai dari dataran landai hingga lereng bukit yang subur. Keadaan geografis ini memberikan potensi yang besar
+      dalam bidang pertanian, kehutanan, dan sumber daya alam lainnya.
+    </p>
+
+    <div class="text-center my-4">
+      <img src="{{ url_for('static', filename='images/peta-geografis.jpeg') }}" alt="Peta Letak Geografis Desa" class="img-fluid rounded shadow">
+    </div>
+
+    <p><strong>Secara administratif, Desa Gattareng Toa memiliki batas-batas wilayah sebagai berikut:</strong></p>
+    <ol class="batas-wilayah">
+    <li>Sebelah Utara: berbatasan langsung dengan Kabupaten Bone</li>
+    <li>Sebelah Timur: berbatasan dengan Kabupaten Bone dan Kabupaten Barru</li>
+    <li>Sebelah Selatan: berbatasan dengan Kabupaten Barru</li>
+    <li>Sebelah Barat: berbatasan dengan desa-desa di wilayah Kecamatan Marioriwawo</li>
+    </ol>
+
+
+    <p>
+      Letak strategis ini menjadikan Gattareng Toa sebagai desa penghubung antara beberapa kabupaten di Sulawesi Selatan.
+      Selain itu, wilayahnya yang dilintasi oleh sungai kecil dan memiliki sumber air alami menjadikan desa ini sangat potensial
+      untuk pengembangan sektor pertanian dan konservasi lingkungan.
+    </p>
+    <p>
+      Iklim di Desa Gattareng Toa tergolong tropis basah dengan dua musim utama, yaitu musim hujan dan musim kemarau,
+      yang sangat mendukung kegiatan pertanian sepanjang tahun. Suhu udara relatif sejuk, terutama di daerah perbukitan,
+      dengan curah hujan yang cukup tinggi sepanjang tahun.
+    </p>
+    <p>
+      Dengan kondisi geografis yang demikian, Desa Gattareng Toa memiliki karakter khas sebagai wilayah pedesaan yang asri,
+      subur, dan potensial untuk dikembangkan sebagai kawasan pertanian berbasis lokal dan berwawasan lingkungan.
+    </p>
+  </div>
+</section>
+
+<!-- VISI MISI -->
+<section class="visi-misi">
+  <div class="container">
+    <div class="visi-header">
+      <h2>Visi Misi Desa Gattareng Toa</h2>
+    </div>
+
+    <div class="visi-grid">
+      <!-- Konten Visi dan Misi -->
+      <div class="visi-left">
+        <h3>VISI DESA GATTARENG TOA</h3>
+        <p>Menjadikan Desa Gattareng Toa Wisata Terbaik <strong>(Pariwisata, Transparan, Empati, Religius, Berprestasi, Aspiratif, Kekeluargaan)</strong></p>
+
+        <h3>MISI DESA GATTARENG TOA</h3>
+        <ol class="misi-list">
+          <li><strong>PARIWISATA</strong>, yaitu membangun pengelolaan sektor pariwisata yang handal, profesional dan proporsional untuk meningkatkan PAD.</li>
+          <li><strong>TRANSPARANSI</strong>, mengedepankan kejujuran, keterbukaan dan keadilan dalam pemerintahan.</li>
+          <li><strong>EMPATI</strong>, menumbuhkan rasa peduli dan tanggap terhadap sosial dan lingkungan sekitar.</li>
+          <li><strong>RELIGIUS</strong>, membina kehidupan spiritual yang religius dan berakhlak mulia.</li>
+          <li><strong>BERPRESTASI</strong>, menciptakan masyarakat desa yang berprestasi melalui pembinaan dan pelatihan.</li>
+          <li><strong>ASPIRATIF</strong>, merespon usulan warga secara terbuka dengan prinsip 3T (Terima, Tanggapi, Tuntaskan).</li>
+          <li><strong>KEKELUARGAAN</strong>, menciptakan suasana desa yang nyaman dan harmonis.</li>
+        </ol>
+      </div>
+
+      <!-- Foto Kepala Desa -->
+      <div class="visi-right">
+        <img src="{{ url_for('static', filename='images/kepala desa.jpeg') }}" alt="Kepala Desa" class="foto-kades">
+        <div class="nama-kades">IRWANSA, S.IP</div>
+        <div class="jabatan-kades">KEPALA DESA GATTARENG TOA</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Struktur Organisasi -->
+<section class="struktur-section">
+  <div class="struktur-container">
+    <h2 class="struktur-title">STRUKTUR ORGANISASI DAN APARAT PEMERINTAH DESA</h2>
+    <p class="struktur-desc">
+      Pemerintah Desa Gattareng Toa terdiri dari Kepala Desa beserta perangkat desa yang bertugas menjalankan roda pemerintahan, pembangunan, pelayanan publik, dan pemberdayaan masyarakat. Struktur organisasi ini dirancang untuk mencerminkan sistem kerja yang transparan, efisien, dan akuntabel dalam melayani masyarakat secara menyeluruh.
+    </p>
+    <p class="struktur-desc">
+      Setiap aparat desa memiliki peran dan tanggung jawab yang strategis dalam mendukung visi dan misi desa, serta dalam menciptakan tata kelola pemerintahan desa yang baik dan berorientasi pada kebutuhan warga.
+    </p>
+
+    <!-- Gambar Struktur -->
+    <div class="struktur-layout">
+      <div class="struktur-image">
+        <img src="{{ url_for('static', filename='images/struktur-pemerintahan.jpeg') }}" alt="Struktur Organisasi Desa">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="aparat-grid-section">
+  <div class="aparat-container">
+    <h2 class="aparat-title">APARAT PEMERINTAH DESA GATTARENG TOA</h2>
+    <div class="aparat-grid">
+      {% for a in aparat %}
+      <div class="aparat-card">
+        <img src="{{ url_for('static', filename='uploads/aparat/' ~ a.foto) }}" alt="Foto {{ a.nama }}">
+        <h4>{{ a.nama }}</h4>
+        <p>{{ a.jabatan }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+  <section class="berita-section">
+    <div class="container">
+      <h2 class="berita-title">Lihat Yang lainnya</h2>
+      <p class="berita-subtitle">
+       Lihat seputar berita desa
+      </p>
+
+      <div class="berita-grid">
+        {% for b in berita_terbaru %}
+        <div class="berita-card">
+            <a href="{{ url_for('landing.detail_berita_user', slug=b.slug) }}">
+            <img src="{{ url_for('static', filename='uploads/berita/' ~ b.gambar) }}" alt="{{ b.judul }}">
+          </a>
+          <div class="berita-body">
+            <h3>{{ b.judul }}</h3>
+            <p>{{ b.konten[:200]|safe }}...</p>
+          </div>
+          <div class="berita-tanggal">{{ b.created_at.strftime('%d %B %Y') }}</div>
+          <div class="berita-author">{{ b.pembuat }}</div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="lihat-lebih text-right">
+        <a href="#">Lihat Berita Lebih Banyak</a>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+
+
+
+
+{% endblock %}

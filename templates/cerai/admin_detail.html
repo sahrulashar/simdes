@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Detail SK Cerai{% endblock %}
+{% block content %}
+
+<div class="page-title"><div class="title_left"><h3><i class="fa fa-file-text"></i> Detail Surat Cerai</h3></div></div>
+<div class="clearfix"></div>
+
+<div class="row"><div class="col-md-8"><div class="x_panel">
+  <div class="x_title"><h2><i class="fa fa-info-circle"></i> Informasi Surat</h2><div class="clearfix"></div></div>
+  <div class="x_content">
+    <table class="table table-bordered">
+      <tr><th>No Surat</th><td>{{ data.no_surat }}</td></tr>
+      <tr><th>NIK</th><td>{{ data.nik }}</td></tr>
+      <tr><th>Nama</th><td>{{ data.nama }}</td></tr>
+      <tr><th>TTL</th><td>{{ data.tempat_lahir }}, {{ data.tanggal_lahir.strftime('%d-%m-%Y') if data.tanggal_lahir else '' }}</td></tr>
+      <tr><th>Jenis Kelamin</th><td>{{ data.jenis_kelamin }}</td></tr>
+      <tr><th>Pekerjaan</th><td>{{ data.pekerjaan }}</td></tr>
+      <tr><th>Agama</th><td>{{ data.agama }}</td></tr>
+      <tr><th>Alamat</th><td>{{ data.alamat }}</td></tr>
+      <tr><th>Nama Pasangan</th><td>{{ data.nama_pasangan }}</td></tr>
+      <tr><th>Tahun Cerai</th><td>{{ data.tahun_cerai }}</td></tr>
+      <tr><th>Status</th><td>{% if data.status=='approved' %}<span class="label label-success">Approved</span>{% else %}<span class="label label-warning">Pending</span>{% endif %}</td></tr>
+      <tr><th>Pembuat Surat</th><td>{{ data.pembuat_surat }}</td></tr>
+      <tr><th>Dibuat</th><td>{{ data.created_at.strftime('%d-%m-%Y %H:%M') if data.created_at else '' }}</td></tr>
+    </table>
+
+    <a href="{{ url_for('cerai.admin_index') }}" class="btn btn-default"><i class="fa fa-arrow-left"></i> Kembali</a>
+    {% if data.status == 'approved' %}
+      <a href="{{ url_for('cerai.admin_cetak', id=data.id) }}" class="btn btn-secondary" target="_blank"><i class="fa fa-print"></i> Cetak</a>
+    {% else %}
+      <a href="{{ url_for('cerai.admin_approve', id=data.id) }}" class="btn btn-success" onclick="return confirm('Approve surat ini?')"><i class="fa fa-check"></i> Approve</a>
+    {% endif %}
+  </div>
+</div></div></div>
+{% endblock %}

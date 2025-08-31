@@ -1,0 +1,38 @@
+{% extends 'base_user.html' %}
+
+{% block content %}
+<!-- HERO SECTION -->
+<section class="hero-potensi" style="background-image: url('{{ url_for('static', filename='images/wave-red.png') }}');">
+  <div class="container text-center text-white py-5">
+    <h1 class="display-5 fw-bold">BERITA DESA</h1>
+    <p class="lead">Informasi dan kabar terkini dari Desa Gattareng Toa</p>
+  </div>
+</section>
+
+<!-- LIST BERITA -->
+<section class="berita-list-section bg-white py-5">
+  <div class="container">
+    {% for b in berita_list %}
+    <div class="berita-item d-flex mb-5 pb-4 border-bottom">
+      
+      <!-- Gambar -->
+      <div class="berita-thumb me-4 flex-shrink-0">
+        <img src="{{ url_for('static', filename='uploads/berita/' ~ b.gambar) }}"
+             alt="{{ b.judul }}"
+             class="img-fluid rounded shadow"
+             style="width: 230px; height: 150px; object-fit: cover;">
+      </div>
+
+      <!-- Info -->
+      <div class="berita-info">
+        <h5 class="fw-bold text-danger mb-2">{{ b.judul }}</h5>
+        <div class="text-muted small mb-2">{{ b.created_at.strftime('%d %B %Y') }}</div>
+        <p class="mb-2 text-dark">{{ b.konten | striptags | truncate(140, True, '...') }}</p>
+        <a href="{{ url_for('landing.detail_berita_user', slug=b.slug) }}" class="text-danger small">Baca Selengkapnya</a>
+      </div>
+
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block title %}Data Surat Cerai{% endblock %}
+{% block content %}
+
+<div class="page-title">
+  <div class="title_left"><h3><i class="fa fa-heart-broken"></i> Surat Keterangan Cerai</h3></div>
+</div>
+<div class="clearfix"></div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <div class="row">
+          <div class="col-md-6"><h2><i class="fa fa-list"></i> Daftar Surat</h2></div>
+          <div class="col-md-6 text-right">
+            <a href="{{ url_for('cerai.admin_tambah') }}" class="btn btn-primary btn-sm">
+              <i class="fa fa-plus"></i> Tambah Surat
+            </a>
+          </div>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+
+      <div class="x_content">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered table-hover datatable">
+            <thead style="background:#2A3F54;color:white;">
+              <tr class="text-center">
+                <th>No</th>
+                <th>No Surat</th>
+                <th>NIK</th>
+                <th>Nama</th>
+                <th>Pasangan</th>
+                <th>Tahun Cerai</th>
+                <th>Status</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for d in data %}
+              <tr>
+                <td class="text-center">{{ loop.index }}</td>
+                <td>{{ d.no_surat }}</td>
+                <td>{{ d.nik }}</td>
+                <td>{{ d.nama }}</td>
+                <td>{{ d.nama_pasangan }}</td>
+                <td>{{ d.tahun_cerai }}</td>
+                <td class="text-center">
+                  {% if d.status == 'approved' %}
+                    <span class="label label-success">Approved</span>
+                  {% else %}
+                    <span class="label label-warning">Pending</span>
+                  {% endif %}
+                </td>
+                <td class="text-center">
+                  <a href="{{ url_for('cerai.admin_detail', id=d.id) }}" class="btn btn-info btn-xs"><i class="fa fa-info-circle"></i></a>
+                  <a href="{{ url_for('cerai.admin_edit', id=d.id) }}" class="btn btn-warning btn-xs"><i class="fa fa-edit"></i></a>
+                  {% if d.status != 'approved' %}
+                    <a href="{{ url_for('cerai.admin_approve', id=d.id) }}" class="btn btn-success btn-xs"
+                       onclick="return confirm('Yakin ingin approve surat ini?')"><i class="fa fa-check"></i></a>
+                  {% else %}
+                    <a href="{{ url_for('cerai.admin_cetak', id=d.id) }}" class="btn btn-secondary btn-xs" target="_blank"><i class="fa fa-print"></i></a>
+                  {% endif %}
+                </td>
+              </tr>
+              {% else %}
+              <tr><td colspan="8" class="text-center text-muted">Belum ada surat cerai.</td></tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

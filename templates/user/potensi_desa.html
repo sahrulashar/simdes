@@ -1,0 +1,50 @@
+{% extends 'base_user.html' %}
+
+{% block content %}
+<!-- HERO SECTION -->
+<section class="hero-potensi">
+  <div class="container text-center text-white py-5">
+    <h1 class="display-4 fw-bold">POTENSI DESA GATTARENG TOA</h1>
+    <p class="lead">Informasi mengenai potensi desa Gattareng Toa</p>
+  </div>
+</section>
+
+<!-- SECTION: DESKRIPSI UMUM -->
+<section class="potensi-intro-section py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        <h3 class="fw-bold mb-3 text-danger">POTENSI YANG TERDAPAT DI DESA GATTARENG TOA</h3><br>
+        <p class="text-justify">
+          Desa Gattareng Toa merupakan salah satu desa yang diberkahi dengan kekayaan sumber daya alam dan budaya yang berlimpah. Letaknya yang strategis di kawasan perbukitan dengan kontur tanah yang subur menjadikan desa ini memiliki potensi besar di berbagai sektor, mulai dari pertanian, peternakan, perkebunan, hingga pariwisata berbasis kearifan lokal.
+        </p>
+        <p class="text-justify">
+          Masyarakat yang ramah dan adat istiadat yang masih terjaga menjadi daya tarik tersendiri bagi pengembangan desa wisata dan pelestarian budaya. Dengan pengelolaan yang terarah dan berkelanjutan, potensi-potensi tersebut diharapkan mampu menjadi pendorong kemajuan ekonomi desa dan peningkatan kesejahteraan warga secara menyeluruh.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION: POTENSI LIST -->
+<section id="potensi" class="section-potensi py-5">
+  <div class="container">
+    <h2 class="judul-potensi text-center">POTENSI DESA</h2>
+    <p class="subjudul-potensi text-center mb-4">Informasi tentang potensi dan kemajuan Desa di berbagai bidang</p>
+
+    {% for potensi in potensi_list %}
+    <div class="potensi-item">
+      <!-- Gambar Potensi -->
+      <div class="potensi-img-wrapper">
+        <img src="{{ url_for('static', filename='uploads/potensi/' + potensi.gambar) }}" alt="{{ potensi.sub_judul }}">
+      </div>
+
+      <!-- Box Judul (link ke detail) -->
+      <a href="{{ url_for('landing.potensi_detail', id=potensi.id) }}" class="potensi-box">
+        {{ potensi.sub_judul|upper }}
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

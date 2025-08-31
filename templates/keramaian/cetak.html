@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Surat Keramaian - {{ data.nama }}</title>
+  <style>
+    body { font-family: "Times New Roman", serif; margin: 40px; }
+    .kop { text-align: center; line-height: 1.4; }
+    .kop h2, .kop h3 { margin: 0; }
+    .kop p { margin: 2px 0; font-size: 12pt; }
+    .judul { text-align: center; margin: 20px 0; text-decoration: underline; font-weight: bold; }
+    .isi { margin: 20px 0; font-size: 12pt; }
+    .ttd { width: 100%; margin-top: 50px; }
+    .ttd .kanan { text-align: right; float: right; }
+  </style>
+</head>
+<body onload="window.print()">
+
+  <!-- Kop Surat -->
+  <div class="kop">
+    <h2>PEMERINTAH KABUPATEN SOPPENG</h2>
+    <h3>KECAMATAN MARIORIWAWO</h3>
+    <h3>DESA GATTARENG TOA</h3>
+    <p>Alamat : Jl. Poros Buludua, Desa Gattareng Toa Kec. Marioriwawo Kab. Soppeng</p>
+    <p>Email : desagattarengtoa0013awo@gmail.com, Kode Pos : 90862</p>
+    <hr>
+  </div>
+
+  <!-- Judul Surat -->
+  <div class="judul">
+    <p>SURAT PENGANTAR IZIN KERAMAIAN</p>
+  </div>
+  <p style="text-align: center;">Nomor : {{ data.no_surat }}</p>
+
+  <!-- Isi Surat -->
+  <div class="isi">
+    <p>Kepada Yth.</p>
+    <p><b>Kepala Kepolisian Sektor Marioriwawo</b></p>
+    <p>di -</p>
+    <p style="margin-left: 30px;">Tempat</p>
+
+    <p style="margin-top: 15px;">
+      Yang bertanda tangan di bawah ini Kepala Desa Gattareng Toa Kecamatan Marioriwawo Kabupaten Soppeng
+      menerangkan bahwa:
+    </p>
+
+    <table style="margin-left: 30px;">
+      <tr><td width="180px">Nama</td><td>: {{ data.nama }}</td></tr>
+      <tr><td>Umur</td><td>: {{ data.umur }} Tahun</td></tr>
+      <tr><td>Pekerjaan</td><td>: {{ data.pekerjaan }}</td></tr>
+      <tr><td>Alamat</td><td>: {{ data.alamat }}</td></tr>
+    </table>
+
+    <p style="margin-top: 15px;">
+      Benar yang bersangkutan bermaksud akan melaksanakan kegiatan <b>{{ data.kegiatan }}</b>
+      pada tanggal <b>{{ data.tanggal_acara.strftime('%d-%m-%Y') if data.tanggal_acara else '' }}</b>,
+      bertempat di <b>{{ data.tempat }}</b>, Dusun <b>{{ data.dusun }}</b>.
+    </p>
+
+    <p>
+      Demikian surat pengantar izin keramaian ini diberikan kepada yang bersangkutan untuk dipergunakan
+      sebagaimana mestinya.
+    </p>
+  </div>
+
+  <!-- Tanda Tangan -->
+  <div class="ttd">
+    <div class="kanan">
+      <p>Gattareng Toa, {{ data.created_at.strftime('%d-%m-%Y') if data.created_at else '' }}</p>
+      <p>Kepala Desa</p>
+      <br><br><br>
+      <p><b>Irwansa, S.IP</b></p>
+    </div>
+  </div>
+
+</body>
+</html>

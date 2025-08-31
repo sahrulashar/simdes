@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<!-- Judul Halaman -->
+<div class="page-title">
+  <div class="title_left">
+    <h3><i class="fa fa-dashboard"></i> Dashboard</h3>
+  </div>
+</div>
+<div class="clearfix"></div>
+
+<!-- Kartu Statistik -->
+<div class="row">
+  <!-- Kepala Keluarga -->
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="x_panel tile fixed_height_150">
+      <div class="x_title">
+        <h2><i class="fa fa-home"></i> Kepala Keluarga</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content text-center">
+        <h3><strong>{{ total_kk or '--' }}</strong></h3>
+        <span class="text-muted">Total KK Terdaftar</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Penduduk -->
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="x_panel tile fixed_height_150">
+      <div class="x_title">
+        <h2><i class="fa fa-users"></i> Penduduk</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content text-center">
+        <h3><strong>{{ total_penduduk or '--' }}</strong></h3>
+        <span class="text-muted">Total Penduduk</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Perempuan -->
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="x_panel tile fixed_height_150">
+      <div class="x_title">
+        <h2><i class="fa fa-female"></i> Perempuan</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content text-center">
+        <h3><strong>{{ total_perempuan or '--' }}</strong></h3>
+        <span class="text-muted">Jumlah Perempuan</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Laki-laki -->
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="x_panel tile fixed_height_150">
+      <div class="x_title">
+        <h2><i class="fa fa-male"></i> Laki-Laki</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content text-center">
+        <h3><strong>{{ total_laki or '--' }}</strong></h3>
+        <span class="text-muted">Jumlah Laki-Laki</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Baris Kedua -->
+<div class="row">
+  <!-- Berita -->
+  <div class="col-md-3 col-sm-6 col-xs-12">
+    <div class="x_panel tile fixed_height_150">
+      <div class="x_title">
+        <h2><i class="fa fa-newspaper-o"></i> Berita</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content text-center">
+        <h3><strong>{{ total_berita or '--' }}</strong></h3>
+        <span class="text-muted">Total Berita</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
